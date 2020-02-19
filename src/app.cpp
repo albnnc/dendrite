@@ -50,15 +50,19 @@ void App::render()
 
   for (int i = 0; i < fieldSize; ++i)
   {
-    sf::Color color(50, 50, 50);
-    sf::Vertex line1[] = {
-        sf::Vertex(sf::Vector2f((i + 1) * cellSizePx, 0), color),
-        sf::Vertex(sf::Vector2f((i + 1) * cellSizePx, windowSizePx), color)};
-    sf::Vertex line2[] = {
-        sf::Vertex(sf::Vector2f(0, (i + 1) * cellSizePx), color),
-        sf::Vertex(sf::Vector2f(windowSizePx, (i + 1) * cellSizePx), color)};
-    window.draw(line1, 2, sf::Lines);
-    window.draw(line2, 2, sf::Lines);
+    if (hasGrid)
+    {
+      sf::Color color(50, 50, 50);
+      sf::Vertex line1[] = {
+          sf::Vertex(sf::Vector2f((i + 1) * cellSizePx, 0), color),
+          sf::Vertex(sf::Vector2f((i + 1) * cellSizePx, windowSizePx), color)};
+      sf::Vertex line2[] = {
+          sf::Vertex(sf::Vector2f(0, (i + 1) * cellSizePx), color),
+          sf::Vertex(sf::Vector2f(windowSizePx, (i + 1) * cellSizePx), color)};
+      window.draw(line1, 2, sf::Lines);
+      window.draw(line2, 2, sf::Lines);
+    }
+
     for (int j = 0; j < fieldSize; ++j)
     {
       for (int k = 0; k < field.populationMax; ++k)

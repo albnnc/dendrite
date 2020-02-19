@@ -14,6 +14,7 @@ private:
   int windowSizePx = 800;
   int sleepMs = 5;
   int iterationsPerFrame = 100;
+  bool hasGrid = false;
   sf::RenderWindow window;
   Field field;
 
