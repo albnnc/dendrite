@@ -39,24 +39,8 @@ public:
     return *this;
   }
 
-  Vec2 operator+(double n) { return Vec2(x + n, y + n); }
-  Vec2 operator-(double n) { return Vec2(x - n, y - n); }
   Vec2 operator*(double n) { return Vec2(x * n, y * n); }
   Vec2 operator/(double n) { return Vec2(x / n, y / n); }
-
-  Vec2 &operator+=(double s)
-  {
-    x += s;
-    y += s;
-    return *this;
-  }
-
-  Vec2 &operator-=(double s)
-  {
-    x -= s;
-    y -= s;
-    return *this;
-  }
 
   Vec2 &operator*=(double s)
   {

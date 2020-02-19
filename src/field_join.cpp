@@ -5,9 +5,6 @@ namespace dendrite
 
 void Field::join()
 {
-  int fieldSize = data.size();
-  Vec2 fieldCenter = {(double)fieldSize / 2, (double)fieldSize / 2};
-
   // #pragma omp parallel for
   for (int i = 0; i < fieldSize; ++i)
   {
@@ -18,8 +15,7 @@ void Field::join()
         Particle &p = data[i][j][k];
         if (p.bornStep < 0)
         {
-          // break;
-          continue;
+          break;
         }
         if (p.freezeStep > 0)
         {
@@ -30,6 +26,7 @@ void Field::join()
         double closestFrozenDistance = -1;
         long long int closestFrozenRootStep = -1;
         Vec2 closestFrozenNeighborPosition = {-1, -1};
+
         for (int x = i - 1; x <= i + 1; ++x)
         {
           for (int y = j - 1; y <= j + 1; ++y)
@@ -47,8 +44,7 @@ void Field::join()
               Particle &q = data[x][y][z];
               if (q.bornStep < 0)
               {
-                // break;
-                continue;
+                break;
               }
               Vec2 d = Vec2(x - i, y - j) + q - p;
               double dLength = d.length();
@@ -70,17 +66,23 @@ void Field::join()
                 }
                 else if (dLength <= interactionDelta)
                 {
-
-                  translation += d / 2 / dLength / dLength;
+                  Vec2 translationCandidate = d / 2 / dLength / dLength;
+                  Vec2 translationMax = d - d.normalize() * 2 * particleRadius;
+                  if (translationMax.length() < translationCandidate.length())
+                  {
+                    translation += translationMax;
+                  }
+                  else
+                  {
+                    translation += translationMax;
+                  }
                 }
               }
             }
           }
           if (closestFrozenDistance == -1)
           {
-            Vec2 shift = fieldCenter - Vec2(i + 0.5 + p.x, j + 0.5 + p.y);
-            p += translation.normalize() * particleDeltaMax +
-                 shift.normalize() * particleDeltaShift;
+            p += translation.normalize() * particleDeltaMax;
           }
           else
           {

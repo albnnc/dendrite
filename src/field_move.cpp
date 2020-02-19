@@ -5,9 +5,7 @@ namespace dendrite
 
 void Field::move()
 {
-  int fieldSize = data.size();
   hasAnyMoved = false;
-
   // #pragma omp parallel for
   for (int i = 0; i < fieldSize; ++i)
   {
@@ -24,14 +22,11 @@ void Field::move()
         {
           continue;
         }
-        double dx = ((double)rand() / RAND_MAX > 0.5 ? 1 : -1) *
-                    (double)rand() / RAND_MAX * particleDeltaMax;
-        double dy = ((double)rand() / RAND_MAX > 0.5 ? 1 : -1) *
-                    (double)rand() / RAND_MAX * particleDeltaMax;
-        p.x += dx + moveShifts[i][j].x;
-        p.y += dy + moveShifts[i][j].y;
-        // p.x -= 0.01;
-        // p.y += 0.01;
+        Vec2 delta(((double)rand() / RAND_MAX > 0.5 ? 1 : -1) * (double)rand() / RAND_MAX,
+                   ((double)rand() / RAND_MAX > 0.5 ? 1 : -1) * (double)rand() / RAND_MAX);
+        Vec2 shift = fieldCenter - Vec2(i + 0.5 + p.x, j + 0.5 + p.y);
+        p += delta.normalize() * particleDeltaMax +
+             shift.normalize() * particleDeltaShift;
         hasAnyMoved = true;
       }
     }

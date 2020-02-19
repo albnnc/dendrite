@@ -24,22 +24,6 @@ void App::start()
       // }
     }
 
-    // if (hasAnyMoved || stepNumber == 1)
-    // {
-    //   double start = omp_get_wtime();
-    //   for (int i = 0; i < 1000; ++i)
-    //   {
-    //     move(map, stepNumber);
-    //     born(map, stepNumber);
-    //     arrange(map, stepNumber);
-    //     join(map, stepNumber);
-    //     arrange(map, stepNumber);
-    //     ++stepNumber;
-    //   }
-    //   double end = omp_get_wtime();
-    //   cout << "dt: " << end - start << endl;
-    // }
-
     for (int i = 0; i < iterationsPerFrame; ++i)
     {
       field.cycle();
@@ -54,14 +38,14 @@ void App::start()
 
 void App::render()
 {
-  sf::Color colors[3][3] = {
-      {sf::Color(255, 0, 0), sf::Color(255, 128, 0), sf::Color(255, 255, 0)},
-      {sf::Color(0, 255, 0), sf::Color(0, 255, 255), sf::Color(0, 0, 255)},
-      {sf::Color(255, 0, 255), sf::Color(0, 128, 255), sf::Color(255, 255, 255)}};
+  // sf::Color colors[3][3] = {
+  //     {sf::Color(255, 0, 0), sf::Color(255, 128, 0), sf::Color(255, 255, 0)},
+  //     {sf::Color(0, 255, 0), sf::Color(0, 255, 255), sf::Color(0, 0, 255)},
+  //     {sf::Color(255, 0, 255), sf::Color(0, 128, 255), sf::Color(255, 255, 255)}};
 
   int fieldSize = field.data.size();
   int cellSizePx = (windowSizePx / fieldSize);
-  int particleRadiusPx = cellSizePx * field.particleRadius;
+  int particleRadiusPx = cellSizePx * field.particleRadius + 1;
   sf::CircleShape circle(particleRadiusPx);
 
   for (int i = 0; i < fieldSize; ++i)
@@ -75,10 +59,8 @@ void App::render()
         sf::Vertex(sf::Vector2f(windowSizePx, (i + 1) * cellSizePx), color)};
     window.draw(line1, 2, sf::Lines);
     window.draw(line2, 2, sf::Lines);
-
     for (int j = 0; j < fieldSize; ++j)
     {
-
       for (int k = 0; k < field.populationMax; ++k)
       {
         Particle p = field.data[i][j][k];
@@ -94,12 +76,10 @@ void App::render()
             isFrozen ? (((double)p.freezeStep / (double)field.stepNumber) * 255) : 170,
             isFrozen ? 0 : 170,
             isFrozen ? 255 - (((double)p.freezeStep / (double)field.stepNumber) * 255) : 170);
-        // sf::Color color = isFrozen ? colors[i][j] : sf::Color(160, 160, 160);
         if (std::abs(p.x) > 0.5 || std::abs(p.y) > 0.5)
         {
           std::cout << "out of bounds: " << p << std::endl;
         }
-
         circle.setFillColor(color);
         window.draw(circle);
       }

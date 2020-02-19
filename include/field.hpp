@@ -23,7 +23,7 @@ public:
   double particleBirthProbability = 0.01;
   double particleRadius = 0.05;
   double particleDeltaMax = 0.002;
-  double particleDeltaShift = 0.0006;
+  double particleDeltaShift = 0.003;
   double interactionDelta = 0.7;
   double interactionDeltaForFreeze = 0.2;
 
@@ -41,8 +41,8 @@ public:
 private:
   bool hasAnyMoved = false;
   bool mayBorn = false;
-  Data buff = Data(0);
-  std::vector<std::vector<Vec2>> moveShifts;
+  int fieldSize;
+  Vec2 fieldCenter;
 };
 
 }; // namespace dendrite

@@ -5,7 +5,6 @@ namespace dendrite
 
 void Field::collapse()
 {
-  int fieldSize = data.size();
   // #pragma omp parallel for
   for (int i = 0; i < fieldSize; ++i)
   {
@@ -18,19 +17,16 @@ void Field::collapse()
           [](Particle &p) {
             return p.bornStep > 0 && p.freezeStep < 0;
           });
-
       if (notFrozenFirst == cell.end())
       {
         continue;
       }
-
       auto notBornFirst = std::find_if(
           cell.begin(),
           cell.end(),
           [](Particle &p) {
             return p.bornStep < 0;
           });
-
       int count = std::distance(notFrozenFirst, notBornFirst);
       if (count >= populationCritical)
       {

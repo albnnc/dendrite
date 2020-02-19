@@ -5,7 +5,6 @@ namespace dendrite
 
 void Field::sort()
 {
-  int fieldSize = data.size();
   // #pragma omp parallel for
   for (int i = 0; i < fieldSize; ++i)
   {

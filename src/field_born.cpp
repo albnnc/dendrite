@@ -6,7 +6,6 @@ namespace dendrite
 void Field::born()
 {
   mayBorn = false;
-  int fieldSize = data.size();
   // #pragma omp parallel for
   for (int i = 0; i < fieldSize; ++i)
   {

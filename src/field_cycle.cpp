@@ -11,12 +11,10 @@ void Field::cycle()
   arrange();
   sort();
   collapse();
-
   if (!mayBorn && !hasAnyMoved)
   {
     resize(data.size() + 4);
   }
-
   ++stepNumber;
 }
 

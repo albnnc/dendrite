@@ -5,10 +5,9 @@ namespace dendrite
 
 void Field::arrange()
 {
-  int fieldSize = data.size();
   std::vector<std::vector<int>> populations(
       fieldSize, std::vector<int>(fieldSize));
-
+  // #pragma omp parallel for
   for (int i = 0; i < fieldSize; ++i)
   {
     for (int j = 0; j < fieldSize; ++j)
@@ -34,10 +33,9 @@ void Field::arrange()
         {
           break;
         }
-        double sx = std::round(p.x);
-        double sy = std::round(p.y);
-        int x = i + sx;
-        int y = j + sy;
+        Vec2 delta(std::round(p.x), std::round(p.y));
+        int x = i + delta.x;
+        int y = j + delta.y;
         if (x < 0 || y < 0 || x >= fieldSize || y >= fieldSize)
         {
           data[i][j][k] = Particle();
@@ -45,8 +43,7 @@ void Field::arrange()
         }
         else if (x != i || y != j)
         {
-          p.x = p.x - sx;
-          p.y = p.y - sy;
+          p -= delta;
           data[i][j][k] = Particle();
           data[x][y][populations[x][y]] = p;
           --populations[i][j];
