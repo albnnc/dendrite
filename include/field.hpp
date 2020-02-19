@@ -38,6 +38,8 @@ public:
   void collapse();
   void cycle();
 
+  double countBoxes(int rootStep = -1);
+
 private:
   bool hasAnyMoved = false;
   bool mayBorn = false;

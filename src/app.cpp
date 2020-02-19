@@ -18,15 +18,28 @@ void App::start()
     {
       if (event.type == sf::Event::Closed)
         window.close();
-      // if (event.type == sf::Event::KeyReleased && event.key.code == 58)
+      if (event.type == sf::Event::KeyReleased && event.key.code == 58)
+      {
+        field.countBoxes();
+        std::cout << std::endl;
+        std::cout << std::endl;
+      }
+      if (event.type == sf::Event::KeyReleased && event.key.code == 57)
+      {
+        mayIterate = !mayIterate;
+      }
+      // if (event.type == sf::Event::KeyReleased)
       // {
-      //   screenshot(window, map, stepNumber);
+      //   std::cout << event.key.code << std::endl;
       // }
     }
 
-    for (int i = 0; i < iterationsPerFrame; ++i)
+    if (mayIterate)
     {
-      field.cycle();
+      for (int i = 0; i < iterationsPerFrame; ++i)
+      {
+        field.cycle();
+      }
     }
 
     window.clear();
