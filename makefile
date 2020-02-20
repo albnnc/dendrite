@@ -5,3 +5,6 @@ EXECUTABLE=dendrite
 
 all:
 	$(CC) $(CFLAGS) $(SOURCES) -o $(EXECUTABLE)
+
+clean:
+	rm dendrite *.dat

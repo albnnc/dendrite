@@ -8,5 +8,5 @@ indent_size = 2
 indent_style = space
 quote_type = single
 
-[{Makefile,**.mk}]
+[{makefile,**.mk}]
 indent_style = tab

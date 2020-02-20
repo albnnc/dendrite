@@ -48,14 +48,14 @@ double normalEq2(std::vector<double> x, std::vector<double> y)
   return theta[0];
 }
 
-double Field::countBoxes(int rootStep)
+double Field::countBoxes(long long int rootStep)
 {
   int interationsMax = 20;
   double boxSize = 1;
   std::vector<double> x = {0};
   std::vector<double> y = {0};
 
-  for (int it = 0; it < interationsMax && boxSize >= particleRadius * 2; ++it)
+  for (int it = 0; it < interationsMax && boxSize >= particleRadius * 3; ++it)
   {
     int boxesPerSide = std::ceil((double)fieldSize / boxSize);
     int boxesPerCell = 1.0 / boxSize;
@@ -86,7 +86,8 @@ double Field::countBoxes(int rootStep)
           {
             break;
           }
-          if (cell[k].freezeStep < 0)
+          if ((cell[k].freezeStep < 0) ||
+              (rootStep != -1 && rootStep != cell[k].rootStep))
           {
             continue;
           }

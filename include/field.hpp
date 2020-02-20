@@ -7,6 +7,7 @@
 #include <iostream>
 #include "vec2.hpp"
 #include "particle.hpp"
+#include "data_file.hpp"
 
 namespace dendrite
 {
@@ -38,13 +39,18 @@ public:
   void collapse();
   void cycle();
 
-  double countBoxes(int rootStep = -1);
+  long long int countParticles(long long int rootStep = -1);
+  double countBoxes(long long int rootStep = -1);
+  void updateDataFiles();
+  void writeDataFiles();
 
 private:
   bool hasAnyMoved = false;
   bool mayBorn = false;
   int fieldSize;
   Vec2 fieldCenter;
+  std::vector<long long int> rootSteps;
+  std::vector<DataFile> dataFiles;
 };
 
 }; // namespace dendrite
