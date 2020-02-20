@@ -20,9 +20,8 @@ void App::start()
         window.close();
       if (event.type == sf::Event::KeyReleased && event.key.code == 58)
       {
-        field.countBoxes();
-        std::cout << std::endl;
-        std::cout << std::endl;
+        double dimension = field.countBoxes();
+        std::cout << "dimension: " << dimension << std::endl;
       }
       if (event.type == sf::Event::KeyReleased && event.key.code == 57)
       {

@@ -3,16 +3,64 @@
 namespace dendrite
 {
 
+double normalEq2(std::vector<double> x, std::vector<double> y)
+{
+  int size = x.size();
+  double xtx[2][2] = {{0, 0}, {0, 0}};
+  for (int i = 0; i < size; i++)
+  {
+    xtx[0][1] += x[i];
+    xtx[0][0] += x[i] * x[i];
+  }
+  xtx[1][0] = xtx[0][1];
+  xtx[1][1] = size;
+
+  // inverse
+  double xtxInv[2][2] = {{0, 0}, {0, 0}};
+  double d = 1 / (xtx[0][0] * xtx[1][1] - xtx[1][0] * xtx[0][1]);
+  xtxInv[0][0] = xtx[1][1] * d;
+  xtxInv[0][1] = -xtx[0][1] * d;
+  xtxInv[1][0] = -xtx[1][0] * d;
+  xtxInv[1][1] = xtx[0][0] * d;
+
+  // times x^t
+  std::vector<std::vector<double>> xtxInvxt(
+      2, std::vector<double>(size, 0));
+
+  for (int i = 0; i < 2; i++)
+  {
+    for (int j = 0; j < size; j++)
+    {
+      xtxInvxt[i][j] = xtxInv[i][0] * x[j] + xtxInv[i][1];
+    }
+  }
+
+  // times y
+  double theta[2] = {0, 0};
+  for (int i = 0; i < 2; i++)
+  {
+    for (int j = 0; j < size; j++)
+    {
+      theta[i] += xtxInvxt[i][j] * y[j];
+    }
+  }
+
+  return theta[0];
+}
+
 double Field::countBoxes(int rootStep)
 {
   int interationsMax = 20;
   double boxSize = 1;
-  double dimension = 2;
+  std::vector<double> x = {0};
+  std::vector<double> y = {0};
+
   for (int it = 0; it < interationsMax && boxSize >= particleRadius * 2; ++it)
   {
     int boxesPerSide = std::ceil((double)fieldSize / boxSize);
     int boxesPerCell = 1.0 / boxSize;
     int boxCount = 0;
+
     for (int i = 0; i < boxesPerSide; ++i)
     {
       for (int j = 0; j < boxesPerSide; ++j)
@@ -52,13 +100,12 @@ double Field::countBoxes(int rootStep)
         }
       }
     }
-    dimension = std::log((double)boxCount) / std::log((double)fieldSize / boxSize);
+    x.push_back(std::log((double)fieldSize / boxSize));
+    y.push_back(std::log((double)boxCount));
     boxSize *= 0.8;
   }
 
-  // TODO: approx.
-
-  return dimension;
+  return normalEq2(x, y);
 }
 
 }; // namespace dendrite
