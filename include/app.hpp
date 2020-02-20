@@ -4,6 +4,7 @@
 #include <filesystem>
 #include <SFML/Graphics.hpp>
 #include <SFML/System.hpp>
+#include <omp.h>
 #include "field.hpp"
 
 namespace dendrite
@@ -20,6 +21,7 @@ public:
   void screenshot();
 
 private:
+  int desiredThreadsNumber = 8;
   int windowSizePx = 1000;
   int sleepMs = 10;
   int sleepMsIdle = 300;

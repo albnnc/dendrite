@@ -21,9 +21,11 @@ public:
   Data data = Data(0);
   std::vector<DataFile> dimensionDataFiles;
 
+  int sideResizeDelta = 2;
   int populationMax = 100;
   int populationCritical = 30;
-  double particleBirthProbability = 0.01;
+  long long int particleActiveStepsMax = 3000;
+  double particleBirthProbability = 0.005;
   double particleRadius = 0.05;
   double particleDeltaMax = 0.002;
   double particleDeltaShift = 0.003;
@@ -34,6 +36,7 @@ public:
 
   void resize(int size);
   void born();
+  void die();
   void move();
   void sort();
   void arrange();

@@ -11,9 +11,10 @@ void Field::cycle()
   arrange();
   sort();
   collapse();
+  die();
   if (!mayBorn && !hasAnyMoved)
   {
-    resize(std::max(data.size() + 4, (size_t)((double)data.size() * 1.3)));
+    resize(std::max(data.size() + sideResizeDelta * 2, (size_t)((double)data.size() * 1.3)));
   }
   ++stepNumber;
 }

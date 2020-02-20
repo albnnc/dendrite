@@ -7,7 +7,7 @@ void Field::arrange()
 {
   std::vector<std::vector<int>> populations(
       fieldSize, std::vector<int>(fieldSize));
-  // #pragma omp parallel for
+#pragma omp parallel for
   for (int i = 0; i < fieldSize; ++i)
   {
     for (int j = 0; j < fieldSize; ++j)
