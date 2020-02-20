@@ -17,7 +17,9 @@ class Field
 public:
   typedef std::vector<std::vector<std::vector<Particle>>> Data;
   long long int stepNumber = 1;
+  int fieldSize;
   Data data = Data(0);
+  std::vector<DataFile> dimensionDataFiles;
 
   int populationMax = 100;
   int populationCritical = 30;
@@ -41,16 +43,13 @@ public:
 
   long long int countParticles(long long int clusterStep = -1);
   double countBoxes(long long int clusterStep = -1);
-  void updateDataFiles();
-  void writeDataFiles();
+  void updateDimensionDataFiles();
 
 private:
   bool hasAnyMoved = false;
   bool mayBorn = false;
-  int fieldSize;
   Vec2 fieldCenter;
   std::vector<long long int> clusterSteps;
-  std::vector<DataFile> dataFiles;
 };
 
 }; // namespace dendrite

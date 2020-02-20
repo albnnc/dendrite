@@ -3,21 +3,21 @@
 namespace dendrite
 {
 
-void Field::updateDataFiles()
+void Field::updateDimensionDataFiles()
 {
   for (auto it = clusterSteps.begin(); it != clusterSteps.end(); ++it)
   {
     int step = *it;
     auto df = std::find_if(
-        dataFiles.begin(),
-        dataFiles.end(),
+        dimensionDataFiles.begin(),
+        dimensionDataFiles.end(),
         [step](const DataFile &d) {
           return d.title == std::to_string(step);
         });
-    if (df == dataFiles.end())
+    if (df == dimensionDataFiles.end())
     {
-      dataFiles.push_back(DataFile(std::to_string(step)));
-      df = dataFiles.end() - 1;
+      dimensionDataFiles.push_back(DataFile(std::to_string(step)));
+      df = dimensionDataFiles.end() - 1;
     }
     long long int count = countParticles(step);
     double dimension = countBoxes(step);
