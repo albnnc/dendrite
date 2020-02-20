@@ -3,7 +3,7 @@
 namespace dendrite
 {
 
-long long int Field::countParticles(long long int rootStep)
+long long int Field::countParticles(long long int clusterStep)
 {
   long long int count = 0;
 
@@ -18,8 +18,8 @@ long long int Field::countParticles(long long int rootStep)
         {
           break;
         }
-        if ((rootStep == -1 && p.freezeStep > 0) ||
-            (rootStep == p.rootStep))
+        if ((clusterStep == -1 && p.freezeStep > 0) ||
+            (clusterStep == p.clusterStep))
         {
           ++count;
         }

@@ -1,4 +1,4 @@
-root = true
+cluster = true
 
 [*]
 end_of_line = lf

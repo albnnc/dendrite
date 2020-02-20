@@ -48,7 +48,7 @@ double normalEq2(std::vector<double> x, std::vector<double> y)
   return theta[0];
 }
 
-double Field::countBoxes(long long int rootStep)
+double Field::countBoxes(long long int clusterStep)
 {
   int interationsMax = 20;
   double boxSize = 1;
@@ -89,7 +89,7 @@ double Field::countBoxes(long long int rootStep)
             break;
           }
           if ((cell[k].freezeStep < 0) ||
-              (rootStep != -1 && rootStep != cell[k].rootStep))
+              (clusterStep != -1 && clusterStep != cell[k].clusterStep))
           {
             continue;
           }
@@ -112,12 +112,12 @@ double Field::countBoxes(long long int rootStep)
     boxSize *= 0.8;
   }
 
-  double rootSize =
+  double clusterSize =
       std::max(1.0, std::max(maxField.x - minField.y,
                              maxField.y - minField.y));
   for (size_t i = 0; i < x.size(); ++i)
   {
-    x[i] = std::log(rootSize / x[i]);
+    x[i] = std::log(clusterSize / x[i]);
     y[i] = std::log(y[i]);
     if (x[i] <= 0 || std::isinf(x[i]) ||
         y[i] <= 0 || std::isinf(y[i]))

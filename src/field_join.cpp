@@ -24,7 +24,7 @@ void Field::join()
 
         Vec2 translation(0, 0);
         double closestFrozenDistance = -1;
-        long long int closestFrozenRootStep = -1;
+        long long int closestFrozenClusterStep = -1;
         Vec2 closestFrozenNeighborPosition = {-1, -1};
 
         for (int x = i - 1; x <= i + 1; ++x)
@@ -53,7 +53,7 @@ void Field::join()
                 if (closestFrozenDistance == -1 || dLength < closestFrozenDistance)
                 {
                   closestFrozenDistance = dLength;
-                  closestFrozenRootStep = q.rootStep;
+                  closestFrozenClusterStep = q.clusterStep;
                   closestFrozenNeighborPosition =
                       p + d.normalize() * (dLength - particleRadius * 2);
                 }
@@ -89,7 +89,7 @@ void Field::join()
             p.set(closestFrozenNeighborPosition.x,
                   closestFrozenNeighborPosition.y);
             p.freezeStep = stepNumber;
-            p.rootStep = closestFrozenRootStep;
+            p.clusterStep = closestFrozenClusterStep;
           }
         }
       }

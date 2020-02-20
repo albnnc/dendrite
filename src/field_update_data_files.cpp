@@ -5,7 +5,7 @@ namespace dendrite
 
 void Field::updateDataFiles()
 {
-  for (auto it = rootSteps.begin(); it != rootSteps.end(); ++it)
+  for (auto it = clusterSteps.begin(); it != clusterSteps.end(); ++it)
   {
     int step = *it;
     auto df = std::find_if(

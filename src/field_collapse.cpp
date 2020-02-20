@@ -45,7 +45,7 @@ void Field::collapse()
             stepNumber);
 
         // TODO: one step may produce multiple clusters
-        rootSteps.push_back(stepNumber);
+        clusterSteps.push_back(stepNumber);
       }
     }
   }

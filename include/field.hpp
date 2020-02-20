@@ -39,8 +39,8 @@ public:
   void collapse();
   void cycle();
 
-  long long int countParticles(long long int rootStep = -1);
-  double countBoxes(long long int rootStep = -1);
+  long long int countParticles(long long int clusterStep = -1);
+  double countBoxes(long long int clusterStep = -1);
   void updateDataFiles();
   void writeDataFiles();
 
@@ -49,7 +49,7 @@ private:
   bool mayBorn = false;
   int fieldSize;
   Vec2 fieldCenter;
-  std::vector<long long int> rootSteps;
+  std::vector<long long int> clusterSteps;
   std::vector<DataFile> dataFiles;
 };
 
