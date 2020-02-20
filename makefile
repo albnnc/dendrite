@@ -7,4 +7,4 @@ all:
 	$(CC) $(CFLAGS) $(SOURCES) -o $(EXECUTABLE)
 
 clean:
-	rm dendrite *.dat
+	rm -rf dendrite *.dat

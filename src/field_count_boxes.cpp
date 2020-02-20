@@ -52,8 +52,10 @@ double Field::countBoxes(long long int rootStep)
 {
   int interationsMax = 20;
   double boxSize = 1;
-  std::vector<double> x = {0};
-  std::vector<double> y = {0};
+  std::vector<double> x;
+  std::vector<double> y;
+  Vec2 minField(fieldSize - 1, fieldSize - 1);
+  Vec2 maxField(0, 0);
 
   for (int it = 0; it < interationsMax && boxSize >= particleRadius * 3; ++it)
   {
@@ -69,10 +71,10 @@ double Field::countBoxes(long long int rootStep)
         int yField = j / boxesPerCell;
         int xCell = i % boxesPerCell;
         int yCell = j % boxesPerCell;
-        Vec2 min(boxSize * (double)xCell,
-                 boxSize * (double)yCell);
-        Vec2 max(boxSize * (double)(xCell + 1),
-                 boxSize * (double)(yCell + 1));
+        Vec2 minCell(boxSize * (double)xCell,
+                     boxSize * (double)yCell);
+        Vec2 maxCell(boxSize * (double)(xCell + 1),
+                     boxSize * (double)(yCell + 1));
 
         if (xField >= fieldSize || yField >= fieldSize)
         {
@@ -92,19 +94,41 @@ double Field::countBoxes(long long int rootStep)
             continue;
           }
           Vec2 p = cell[k] - Vec2(-0.5, -0.5);
-          if (p.x >= min.x && p.y >= min.y &&
-              p.x <= max.x && p.y <= max.y)
+          if (p.x >= minCell.x && p.y >= minCell.y &&
+              p.x <= maxCell.x && p.y <= maxCell.y)
           {
             ++boxCount;
+            minField.x = std::min(minField.x, (double)xField);
+            minField.y = std::min(minField.y, (double)yField);
+            maxField.x = std::max(maxField.x, (double)xField);
+            maxField.y = std::max(maxField.y, (double)yField);
             break;
           }
         }
       }
     }
-    x.push_back(std::log((double)fieldSize / boxSize));
-    y.push_back(std::log((double)boxCount));
+    x.push_back(boxSize);
+    y.push_back(boxCount);
     boxSize *= 0.8;
   }
+
+  double rootSize =
+      std::max(1.0, std::max(maxField.x - minField.y,
+                             maxField.y - minField.y));
+  for (size_t i = 0; i < x.size(); ++i)
+  {
+    x[i] = std::log(rootSize / x[i]);
+    y[i] = std::log(y[i]);
+    if (x[i] <= 0 || std::isinf(x[i]) ||
+        y[i] <= 0 || std::isinf(y[i]))
+    {
+      x.erase(x.begin() + i);
+      y.erase(y.begin() + i);
+      --i;
+    }
+  }
+  x.push_back(0);
+  y.push_back(0);
 
   return normalEq2(x, y);
 }

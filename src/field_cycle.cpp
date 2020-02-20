@@ -13,7 +13,7 @@ void Field::cycle()
   collapse();
   if (!mayBorn && !hasAnyMoved)
   {
-    resize(data.size() + 4);
+    resize(std::max(data.size() + 4, (size_t)((double)data.size() * 1.3)));
   }
   ++stepNumber;
 }
