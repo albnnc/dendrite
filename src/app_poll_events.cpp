@@ -57,6 +57,15 @@ void App::pollEvents()
                   << std::endl;
         hasLabels = !hasLabels;
       }
+
+      if (event.key.code == 87) // F3
+      {
+        std::cout << (hasGrid
+                          ? "Hide grid"
+                          : "Show grid")
+                  << std::endl;
+        hasGrid = !hasGrid;
+      }
     }
   }
 }
