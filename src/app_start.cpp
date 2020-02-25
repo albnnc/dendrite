@@ -5,7 +5,7 @@ namespace dendrite
 
 void App::start()
 {
-  std::srand(0);
+  std::srand(std::time(nullptr));
   omp_set_num_threads(
       std::min(desiredThreadsNumber, omp_get_max_threads()));
 

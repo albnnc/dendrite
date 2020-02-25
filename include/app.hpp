@@ -2,6 +2,7 @@
 
 #include <iostream>
 #include <filesystem>
+#include <ctime>
 #include <SFML/Graphics.hpp>
 #include <SFML/System.hpp>
 #include <omp.h>
@@ -29,10 +30,12 @@ private:
 
   bool mayIterate = true;
   bool hasActiveParticles = true;
+  bool hasLabels = false;
   bool hasGrid = false;
 
   sf::RenderWindow window;
   Field field;
+  sf::Font font;
 
   std::string outDir = "out";
 

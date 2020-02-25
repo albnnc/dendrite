@@ -43,9 +43,11 @@ void App::render()
           continue;
         }
 
-        circle.setPosition(
+        Vec2 position(
             (i + 0.5 + p.x) * cellSizePx - particleRadiusPx * 0.5,
             (j + 0.5 + p.y) * cellSizePx - particleRadiusPx * 0.5);
+
+        circle.setPosition(position.x, position.y);
 
         bool isFrozen = p.freezeStep > 0;
         sf::Color color(
@@ -55,6 +57,51 @@ void App::render()
 
         circle.setFillColor(color);
         window.draw(circle);
+
+        if (hasLabels && p.bornStep == p.clusterStep)
+        {
+          sf::Text text;
+          text.setFont(font);
+          text.setString("Cluster #" + std::to_string(p.clusterStep));
+          text.setCharacterSize(12); // in pixels, not points!
+          text.setFillColor(sf::Color::White);
+          text.setPosition(position.x, position.y);
+          window.draw(text);
+        }
+      }
+    }
+  }
+
+  for (int i = 0; i < fieldSize; ++i)
+  {
+    for (int j = 0; j < fieldSize; ++j)
+    {
+      for (int k = 0; k < field.populationMax; ++k)
+      {
+        Particle p = field.data[i][j][k];
+        if (p.bornStep < 0)
+        {
+          break;
+        }
+        if (p.freezeStep < 0)
+        {
+          continue;
+        }
+
+        Vec2 position(
+            (i + 0.5 + p.x) * cellSizePx - particleRadiusPx * 0.5,
+            (j + 0.5 + p.y) * cellSizePx - particleRadiusPx * 0.5);
+
+        if (hasLabels && p.bornStep == p.clusterStep)
+        {
+          sf::Text text;
+          text.setFont(font);
+          text.setString("Cluster #" + std::to_string(p.clusterStep));
+          text.setCharacterSize(12); // in pixels, not points!
+          text.setFillColor(sf::Color::White);
+          text.setPosition(position.x, position.y);
+          window.draw(text);
+        }
       }
     }
   }

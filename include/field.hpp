@@ -28,7 +28,7 @@ public:
   double particleBirthProbability = 0.005;
   double particleRadius = 0.05;
   double particleDeltaMax = 0.002;
-  double particleDeltaShift = 0.003;
+  double particleDeltaShift = 0.0015;
   double interactionDelta = 0.7;
   double interactionDeltaForFreeze = 0.2;
 

@@ -48,6 +48,15 @@ void App::pollEvents()
                   << std::endl;
         hasActiveParticles = !hasActiveParticles;
       }
+
+      if (event.key.code == 86) // F2
+      {
+        std::cout << (hasLabels
+                          ? "Hide labels"
+                          : "Show labels")
+                  << std::endl;
+        hasLabels = !hasLabels;
+      }
     }
   }
 }
