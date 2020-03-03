@@ -54,10 +54,8 @@ double Field::countBoxes(long long int clusterStep)
   double boxSize = 1;
   std::vector<double> x;
   std::vector<double> y;
-  Vec2 minField(fieldSize - 1, fieldSize - 1);
-  Vec2 maxField(0, 0);
 
-  for (int it = 0; it < interationsMax && boxSize >= particleRadius * 3; ++it)
+  for (int it = 0; it < interationsMax && boxSize >= particleRadius; ++it)
   {
     int boxesPerSide = std::ceil((double)fieldSize / boxSize);
     int boxesPerCell = 1.0 / boxSize;
@@ -98,10 +96,6 @@ double Field::countBoxes(long long int clusterStep)
               p.x <= maxCell.x && p.y <= maxCell.y)
           {
             ++boxCount;
-            minField.x = std::min(minField.x, (double)xField);
-            minField.y = std::min(minField.y, (double)yField);
-            maxField.x = std::max(maxField.x, (double)xField);
-            maxField.y = std::max(maxField.y, (double)yField);
             break;
           }
         }
@@ -112,9 +106,7 @@ double Field::countBoxes(long long int clusterStep)
     boxSize *= 0.8;
   }
 
-  double clusterSize =
-      std::max(1.0, std::max(maxField.x - minField.y,
-                             maxField.y - minField.y));
+  double clusterSize = computeDiameter(clusterStep);
   for (size_t i = 0; i < x.size(); ++i)
   {
     x[i] = std::log(clusterSize / x[i]);

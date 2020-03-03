@@ -46,6 +46,7 @@ public:
 
   long long int countParticles(long long int clusterStep = -1);
   double countBoxes(long long int clusterStep = -1);
+  double computeDiameter(long long int clusterStep = -1);
   void updateDimensionDataFiles();
 
 private:

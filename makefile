@@ -1,10 +1,30 @@
-CC=g++
-CFLAGS=-std=c++17 -Wall -O2 -Iinclude -fopenmp -lsfml-graphics -lsfml-window -lsfml-system
-SOURCES=src/*.cpp
-EXECUTABLE=dendrite
+CC = g++
+CFLAGS = -std=c++17 -Wall -O2 -Iinclude
+LFLAGS =
+LIB = -fopenmp -lsfml-graphics -lsfml-window -lsfml-system
 
-all:
-	$(CC) $(CFLAGS) $(SOURCES) -o $(EXECUTABLE)
+EXE = build/dendrite
+
+SRC_DIR = src
+INC_DIR = include
+BUILD_DIR = build
+
+SRC := $(shell find $(SRC_DIR) -name '*.cpp' -exec basename {} \;)
+OBJ := $(patsubst %.cpp,$(BUILD_DIR)/%.o,$(SRC))
+DEP := $(OBJ:.o=.d)
+
+all: $(EXE)
+
+$(EXE): $(OBJ)
+	$(CC) $(LFLAGS) $(LIB) -o $@ $^
+  
+$(BUILD_DIR)/%.o: $(SRC_DIR)/%.cpp $(BUILD_DIR)/%.d
+	mkdir -p $(BUILD_DIR)
+	$(CC) $(CFLAGS) $(LIB) -c -MT $@ -MM -MP -MF $(BUILD_DIR)/$*.d $<
+	$(CC) $(CFLAGS) $(LIB) -c -o $@ $<
+
+$(DEP):
+include $(wildcard $(DEP))
 
 clean:
-	rm -rf dendrite out
+	rm -rf dendrite $(BUILD_DIR)
