@@ -27,9 +27,10 @@ void Field::join()
         long long int closestFrozenClusterStep = -1;
         Vec2 closestFrozenNeighborPosition = {-1, -1};
 
-        for (int x = i - 1; x <= i + 1; ++x)
+        int gap = std::ceil(interactionDelta);
+        for (int x = i - gap; x <= i + gap; ++x)
         {
-          for (int y = j - 1; y <= j + 1; ++y)
+          for (int y = j - gap; y <= j + gap; ++y)
           {
             if (x < 0 || y < 0 || x >= fieldSize || y >= fieldSize)
             {

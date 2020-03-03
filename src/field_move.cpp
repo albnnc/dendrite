@@ -6,6 +6,8 @@ namespace dendrite
 void Field::move()
 {
   hasAnyMoved = false;
+  hasSideParticles = false;
+
   // #pragma omp parallel for
   for (int i = 0; i < fieldSize; ++i)
   {
@@ -20,6 +22,10 @@ void Field::move()
         }
         if (p.freezeStep > 0)
         {
+          if (i == 0 || j == 0 || i == fieldSize - 1 || j == fieldSize - 1)
+          {
+            hasSideParticles = true;
+          }
           continue;
         }
         Vec2 delta(((double)rand() / RAND_MAX > 0.5 ? 1 : -1) * (double)rand() / RAND_MAX,

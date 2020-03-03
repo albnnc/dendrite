@@ -22,14 +22,14 @@ public:
   std::vector<DataFile> dimensionDataFiles;
 
   int sideResizeDelta = 2;
-  int populationMax = 100;
-  int populationCritical = 30;
+  int populationMax = 300;
+  int populationCritical = 50;
   long long int particleActiveStepsMax = 3000;
-  double particleBirthProbability = 0.005;
+  double particleBirthProbability = 0.003;
   double particleRadius = 0.05;
   double particleDeltaMax = 0.002;
-  double particleDeltaShift = 0.0015;
-  double interactionDelta = 0.7;
+  double particleDeltaShift = 0.0;
+  double interactionDelta = 2;
   double interactionDeltaForFreeze = 0.2;
 
   Field(int size);
@@ -50,6 +50,7 @@ public:
 
 private:
   bool hasAnyMoved = false;
+  bool hasSideParticles = false;
   bool mayBorn = false;
   Vec2 fieldCenter;
   std::vector<long long int> clusterSteps;
