@@ -7,7 +7,7 @@ App::App(Config &config) : desiredThreadsNumber(config.get<int>("app", "desiredT
                            windowSizePx(config.get<int>("app", "windowSizePx")),
                            sleepMs(config.get<int>("app", "sleepMs")),
                            sleepMsIdle(config.get<int>("app", "sleepMsIdle")),
-                           iterationsPerFrame(config.get<int>("app", "iterationsPerFrame")),
+                           stepsPerFrame(config.get<int>("app", "stepsPerFrame")),
                            hasLabels(config.get<bool>("app", "hasLabels")),
                            hasGrid(config.get<bool>("app", "hasGrid")),
                            background(

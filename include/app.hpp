@@ -28,7 +28,7 @@ private:
   int windowSizePx;
   int sleepMs;
   int sleepMsIdle;
-  int iterationsPerFrame;
+  int stepsPerFrame;
   bool hasLabels;
   bool hasGrid;
   sf::Color background;

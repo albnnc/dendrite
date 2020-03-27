@@ -15,7 +15,7 @@ void App::start()
 
     if (mayIterate)
     {
-      for (int i = 0; i < iterationsPerFrame; ++i)
+      for (int i = 0; i < stepsPerFrame; ++i)
       {
         field.cycle();
       }
