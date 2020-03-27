@@ -6,6 +6,7 @@
 #include <SFML/Graphics.hpp>
 #include <SFML/System.hpp>
 #include <omp.h>
+#include "config.hpp"
 #include "field.hpp"
 
 namespace dendrite
@@ -14,7 +15,7 @@ namespace dendrite
 class App
 {
 public:
-  App();
+  App(Config &config);
 
   void start();
   void render();
@@ -22,16 +23,18 @@ public:
   void screenshot();
 
 private:
-  int desiredThreadsNumber = 8;
-  int windowSizePx = 1000;
-  int sleepMs = 10;
-  int sleepMsIdle = 300;
-  int iterationsPerFrame = 100;
+  // config.ini group
+  int desiredThreadsNumber;
+  int windowSizePx;
+  int sleepMs;
+  int sleepMsIdle;
+  int iterationsPerFrame;
+  bool hasLabels;
+  bool hasGrid;
+  sf::Color background;
 
   bool mayIterate = true;
   bool hasActiveParticles = true;
-  bool hasLabels = false;
-  bool hasGrid = false;
 
   sf::RenderWindow window;
   Field field;

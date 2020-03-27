@@ -5,6 +5,7 @@
 #include <algorithm>
 #include <vector>
 #include <iostream>
+#include "config.hpp"
 #include "vec2.hpp"
 #include "particle.hpp"
 #include "data_file.hpp"
@@ -16,23 +17,25 @@ class Field
 {
 public:
   typedef std::vector<std::vector<std::vector<Particle>>> Data;
-  long long int stepNumber = 1;
-  int fieldSize;
   Data data = Data(0);
   std::vector<DataFile> dimensionDataFiles;
 
-  int sideResizeDelta = 2;
-  int populationMax = 300;
-  int populationCritical = 50;
-  long long int particleActiveStepsMax = 3000;
-  double particleBirthProbability = 0.003;
-  double particleRadius = 0.05;
-  double particleDeltaMax = 0.002;
-  double particleDeltaShift = 0.0;
-  double interactionDelta = 2;
-  double interactionDeltaForFreeze = 0.2;
+  long long int stepNumber = 1;
 
-  Field(int size);
+  // config.ini group
+  int fieldSize;
+  int sideResizeDelta;
+  int populationMax;
+  int populationCritical;
+  long long int particleActiveStepsMax;
+  double particleBirthProbability;
+  double particleRadius;
+  double particleDeltaMax;
+  double particleDeltaShift;
+  double interactionDelta;
+  double interactionDeltaForFreeze;
+
+  Field(Config &config);
 
   void resize(int size);
   void born();

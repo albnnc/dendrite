@@ -27,4 +27,4 @@ $(DEP):
 include $(wildcard $(DEP))
 
 clean:
-	rm -rf dendrite $(BUILD_DIR)
+	rm -rf $(BUILD_DIR)

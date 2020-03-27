@@ -22,7 +22,7 @@ void App::start()
       field.updateDimensionDataFiles();
     }
 
-    window.clear();
+    window.clear(background);
     render();
     window.display();
 

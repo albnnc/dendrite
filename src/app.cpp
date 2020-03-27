@@ -3,8 +3,19 @@
 namespace dendrite
 {
 
-App::App() : window(sf::VideoMode(windowSizePx, windowSizePx), "dendrite"),
-             field(3)
+App::App(Config &config) : desiredThreadsNumber(config.get<int>("app", "desiredThreadsNumber")),
+                           windowSizePx(config.get<int>("app", "windowSizePx")),
+                           sleepMs(config.get<int>("app", "sleepMs")),
+                           sleepMsIdle(config.get<int>("app", "sleepMsIdle")),
+                           iterationsPerFrame(config.get<int>("app", "iterationsPerFrame")),
+                           hasLabels(config.get<bool>("app", "hasLabels")),
+                           hasGrid(config.get<bool>("app", "hasGrid")),
+                           background(
+                               config.get<std::string>("app", "background") == "dark"
+                                   ? sf::Color::Black
+                                   : sf::Color::White),
+                           window(sf::VideoMode(windowSizePx, windowSizePx), "dendrite"),
+                           field(config)
 {
   if (!font.loadFromFile("roboto.ttf"))
   {
