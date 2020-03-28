@@ -22,7 +22,6 @@ void Field::updateDimensionDataFiles()
     long long int count = countParticles(step);
     double dimension = countBoxes(step);
     auto &dfData = (*df).data;
-    // if (dfData.size() == 0 || count != dfData.back().x)
     if ((dfData.size() == 0 || count != dfData.back().x) &&
         (dimension >= 1 && dimension <= 2))
     {

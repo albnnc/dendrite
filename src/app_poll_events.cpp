@@ -15,7 +15,16 @@ void App::pollEvents()
 
     if (event.type == sf::Event::KeyReleased)
     {
-      // std::cout << "Key pressed: " << event.key.code << std::endl;
+      if (mayLogKeys)
+      {
+        std::cout << "Key pressed: " << event.key.code << std::endl;
+      }
+
+      if (event.key.code == 57) // Space
+      {
+        std::cout << (mayIterate ? "Pause" : "Resume") << std::endl;
+        mayIterate = !mayIterate;
+      }
 
       if (event.key.control && event.key.code == 18) // Ctrl + S
       {
@@ -34,13 +43,7 @@ void App::pollEvents()
         std::cout << "Dimensions data files saved" << std::endl;
       }
 
-      if (event.key.code == 57) // Space
-      {
-        std::cout << (mayIterate ? "Pause" : "Resume") << std::endl;
-        mayIterate = !mayIterate;
-      }
-
-      if (event.key.code == 85) // F1
+      if (event.key.code == 0) // A
       {
         std::cout << (hasActiveParticles
                           ? "Hide active particles"
@@ -49,7 +52,7 @@ void App::pollEvents()
         hasActiveParticles = !hasActiveParticles;
       }
 
-      if (event.key.code == 86) // F2
+      if (event.key.code == 11) // L
       {
         std::cout << (hasLabels
                           ? "Hide labels"
@@ -58,13 +61,36 @@ void App::pollEvents()
         hasLabels = !hasLabels;
       }
 
-      if (event.key.code == 87) // F3
+      if (event.key.code == 6) // G
       {
         std::cout << (hasGrid
                           ? "Hide grid"
                           : "Show grid")
                   << std::endl;
         hasGrid = !hasGrid;
+      }
+
+      if (event.key.code == 1) // B
+      {
+        std::cout << "Change background color"
+                  << std::endl;
+        backgroundColor = backgroundColor == "dark" ? "light" : "dark";
+      }
+
+      if (event.key.code == 15) // P
+      {
+        std::cout << "Change particles color"
+                  << std::endl;
+        particleColor = particleColor == "contrast" ? "gradient" : "contrast";
+      }
+
+      if (event.key.code == 17) // R
+      {
+        particleRadiusDeltaPx =
+            particleRadiusDeltaPx + (event.key.shift ? -0.5 : 0.5);
+        std::cout << "Change particles radius delta to "
+                  << particleRadiusDeltaPx
+                  << std::endl;
       }
     }
   }

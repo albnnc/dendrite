@@ -45,9 +45,18 @@ void Field::arrange()
         {
           p -= delta;
           data[i][j][k] = Particle();
-          data[x][y][populations[x][y]] = p;
           --populations[i][j];
-          ++populations[x][y];
+          if (populations[x][y] < populationMax - 2)
+          {
+            data[x][y][populations[x][y]] = p;
+            ++populations[x][y];
+          }
+          else
+          {
+            std::cout << "Unable to move particle to cell "
+                      << Vec2(x, y)
+                      << ", removing it";
+          }
         }
       }
     }

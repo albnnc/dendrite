@@ -6,41 +6,58 @@ namespace dendrite
 void Field::born()
 {
   mayBorn = false;
-#pragma omp parallel for
-  for (int i = 0; i < fieldSize; ++i)
-  {
-    for (int j = 0; j < fieldSize; ++j)
+  auto bornInCell = [this](Cell &cell) {
+    auto frozen = std::find_if(
+        cell.begin(),
+        cell.end(),
+        [](const Particle &p) {
+          return p.freezeStep > 0;
+        });
+    if (frozen != cell.end())
     {
-      if (i > 0 &&
-          j > 0 &&
-          i < fieldSize - 1 &&
-          j < fieldSize - 1)
+      return;
+    }
+    mayBorn = true;
+    int birthTries = 0;
+    auto it = std::find_if(
+        cell.begin(),
+        cell.end(),
+        [](const Particle &p) {
+          return p.bornStep < 0;
+        });
+    while (it != cell.end() && birthTries < particleBirthTriesMax)
+    {
+      if ((double)std::rand() / RAND_MAX < particleBirthProbability)
       {
-        continue;
+        it->x = (double)std::rand() / RAND_MAX - 0.5;
+        it->y = (double)std::rand() / RAND_MAX - 0.5;
+        it->bornStep = stepNumber;
+        ++it;
       }
-      for (int k = 0; k < populationMax; ++k)
+      ++birthTries;
+    }
+  };
+
+  if (particleBirthStrategy == "bouillon" && stepNumber == 1)
+  {
+#pragma omp parallel for
+    for (int i = 0; i < fieldSize; ++i)
+    {
+      for (int j = 0; j < fieldSize; ++j)
       {
-        Particle &p = data[i][j][k];
-        if (k > 0 && data[i][j][k - 1].bornStep < 0)
-        {
-          break;
-        }
-        if (p.bornStep > 0)
-        {
-          if (p.freezeStep > 0)
-          {
-            break;
-          }
-          continue;
-        }
-        mayBorn = true;
-        if ((double)std::rand() / RAND_MAX < particleBirthProbability)
-        {
-          p.x = (double)rand() / RAND_MAX - 0.5;
-          p.y = (double)rand() / RAND_MAX - 0.5;
-          p.bornStep = stepNumber;
-        }
+        bornInCell(data[i][j]);
       }
+    }
+  }
+
+  if (particleBirthStrategy == "periphery")
+  {
+#pragma omp parallel for
+    for (auto it = peripheryCells.begin();
+         it != peripheryCells.end();
+         ++it)
+    {
+      bornInCell(*it);
     }
   }
 }

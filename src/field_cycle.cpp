@@ -12,9 +12,9 @@ void Field::cycle()
   sort();
   collapse();
   die();
-  if (!mayBorn && !hasAnyMoved)
+  if (particleBirthStrategy == "periphery" && !mayBorn && !hasAnyMoved)
   {
-    resize(std::max(data.size() + sideResizeDelta * 2, (size_t)((double)data.size() * 1.3)));
+    resize(data.size() + sideResizeDelta);
   }
   ++stepNumber;
 }

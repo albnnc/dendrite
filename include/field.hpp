@@ -16,7 +16,8 @@ namespace dendrite
 class Field
 {
 public:
-  typedef std::vector<std::vector<std::vector<Particle>>> Data;
+  typedef std::vector<Particle> Cell;
+  typedef std::vector<std::vector<Cell>> Data;
   Data data = Data(0);
   std::vector<DataFile> dimensionDataFiles;
 
@@ -29,6 +30,8 @@ public:
   int populationCritical;
   long long int particleActiveStepsMax;
   double particleBirthProbability;
+  int particleBirthTriesMax;
+  std::string particleBirthStrategy;
   double particleRadius;
   double particleDeltaMax;
   double particleDeltaShift;
@@ -58,6 +61,7 @@ private:
   bool mayBorn = false;
   Vec2 fieldCenter;
   std::vector<long long int> clusterSteps;
+  std::vector<std::reference_wrapper<Cell>> peripheryCells;
 };
 
 }; // namespace dendrite

@@ -26,14 +26,18 @@ private:
   // config.ini group
   int desiredThreadsNumber;
   int windowSizePx;
+  double particleRadiusDeltaPx;
   int sleepMs;
   int sleepMsIdle;
   int stepsPerFrame;
   bool hasLabels;
   bool hasGrid;
-  sf::Color background;
+  bool mayIterate;
+  bool mayUpdateDimensionDataFiles;
+  bool mayLogKeys;
+  std::string backgroundColor;
+  std::string particleColor;
 
-  bool mayIterate = true;
   bool hasActiveParticles = true;
 
   sf::RenderWindow window;
@@ -43,6 +47,7 @@ private:
   std::string outDir = "out";
 
   void prepareOutDir();
+  sf::Color getContrastColor();
 };
 
 }; // namespace dendrite

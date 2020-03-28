@@ -19,10 +19,13 @@ void App::start()
       {
         field.cycle();
       }
-      field.updateDimensionDataFiles();
+      if (mayUpdateDimensionDataFiles)
+      {
+        field.updateDimensionDataFiles();
+      }
     }
 
-    window.clear(background);
+    window.clear(backgroundColor == "dark" ? sf::Color::Black : sf::Color::White);
     render();
     window.display();
 

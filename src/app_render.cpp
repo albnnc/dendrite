@@ -7,13 +7,15 @@ void App::render()
 {
   int fieldSize = field.data.size();
   int cellSizePx = (windowSizePx / fieldSize);
-  int particleRadiusPx = cellSizePx * field.particleRadius + 1;
+  double particleRadiusPx = std::max(
+      cellSizePx * field.particleRadius + particleRadiusDeltaPx,
+      0.5);
 
   if (hasGrid)
   {
     for (int i = 0; i < fieldSize; ++i)
     {
-      sf::Color color(50, 50, 50);
+      sf::Color color(130, 130, 130, 130);
       sf::Vertex line1[] = {
           sf::Vertex(sf::Vector2f((i + 1) * cellSizePx, 0), color),
           sf::Vertex(sf::Vector2f((i + 1) * cellSizePx, windowSizePx), color)};
@@ -27,8 +29,7 @@ void App::render()
 
   auto forEachParticle = [this,
                           fieldSize,
-                          cellSizePx,
-                          particleRadiusPx](
+                          cellSizePx](
                              std::function<void(Particle p, Vec2 v)> fn) {
     for (int i = 0; i < fieldSize; ++i)
     {
@@ -62,10 +63,25 @@ void App::render()
     circle.setPosition(v.x, v.y);
     bool isFrozen = p.freezeStep > 0;
 
-    sf::Color color(
-        isFrozen ? (((double)p.freezeStep / (double)field.stepNumber) * 255) : 170,
-        isFrozen ? 0 : 170,
-        isFrozen ? 255 - (((double)p.freezeStep / (double)field.stepNumber) * 255) : 170);
+    sf::Color color;
+    if (isFrozen)
+    {
+      if (particleColor == "contrast")
+      {
+        color = getContrastColor();
+      }
+      else
+      {
+        color = sf::Color(
+            ((double)p.freezeStep / (double)field.stepNumber) * 255,
+            0,
+            255 - (((double)p.freezeStep / (double)field.stepNumber) * 255));
+      }
+    }
+    else
+    {
+      color = sf::Color(130, 130, 130);
+    }
     circle.setFillColor(color);
     window.draw(circle);
   });
@@ -73,16 +89,17 @@ void App::render()
   forEachParticle([this, cellSizePx, particleRadiusPx](Particle p, Vec2 v) {
     if (hasLabels && p.freezeStep > 0 && p.bornStep == p.clusterStep)
     {
+      sf::Color color = getContrastColor();
       sf::Vertex line[] = {
-          sf::Vertex(sf::Vector2f(v.x, v.y), sf::Color::White),
-          sf::Vertex(sf::Vector2f(v.x + 20, v.y + 20), sf::Color::White)};
+          sf::Vertex(sf::Vector2f(v.x, v.y), color),
+          sf::Vertex(sf::Vector2f(v.x + 20, v.y + 20), color)};
       window.draw(line, 2, sf::Lines);
 
       sf::Text text;
       text.setFont(font);
       text.setString("Cluster #" + std::to_string(p.clusterStep));
       text.setCharacterSize(14);
-      text.setFillColor(sf::Color::White);
+      text.setFillColor(color);
       text.setPosition(v.x + 25, v.y + 25);
       window.draw(text);
     }
