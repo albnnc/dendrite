@@ -30,6 +30,7 @@ private:
   int sleepMs;
   int sleepMsIdle;
   int stepsPerFrame;
+  int stepsPerDimensionDataFileEntry;
   bool hasLabels;
   bool hasGrid;
   bool mayIterate;
@@ -44,9 +45,13 @@ private:
   Field field;
   sf::Font font;
 
+  int dimensionDataFilesUpdateStep = -1;
+  std::vector<DataFile> dimensionDataFiles;
+
   std::string outDir = "out";
 
   void prepareOutDir();
+  void updateDimensionDataFiles();
   std::string getExecutableDir();
   std::string getCwd();
   sf::Color getContrastColor();

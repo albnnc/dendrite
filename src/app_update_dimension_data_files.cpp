@@ -1,11 +1,13 @@
-#include "field.hpp"
+#include "app.hpp"
 
 namespace dendrite
 {
 
-void Field::updateDimensionDataFiles()
+void App::updateDimensionDataFiles()
 {
-  for (auto it = clusterSteps.begin(); it != clusterSteps.end(); ++it)
+  for (auto it = field.clusterSteps.begin();
+       it != field.clusterSteps.end();
+       ++it)
   {
     int step = *it;
     auto df = std::find_if(
@@ -19,8 +21,8 @@ void Field::updateDimensionDataFiles()
       dimensionDataFiles.push_back(DataFile(std::to_string(step)));
       df = dimensionDataFiles.end() - 1;
     }
-    long long int count = countParticles(step);
-    double dimension = countBoxes(step);
+    long long int count = field.countParticles(step);
+    double dimension = field.countBoxes(step);
     auto &dfData = (*df).data;
     if ((dfData.size() == 0 || count != dfData.back().x) &&
         (dimension >= 1 && dimension <= 2))

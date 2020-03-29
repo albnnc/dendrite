@@ -36,7 +36,7 @@ void App::pollEvents()
       if (event.key.control && event.key.code == 3) // Ctrl + D
       {
         prepareOutDir();
-        for (auto df : field.dimensionDataFiles)
+        for (auto df : dimensionDataFiles)
         {
           df.write(outDir + "/" + df.title + ".dat");
         }

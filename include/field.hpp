@@ -19,7 +19,7 @@ public:
   typedef std::vector<Particle> Cell;
   typedef std::vector<std::vector<Cell>> Data;
   Data data = Data(0);
-  std::vector<DataFile> dimensionDataFiles;
+  std::vector<long long int> clusterSteps;
 
   long long int stepNumber = 1;
 
@@ -51,16 +51,14 @@ public:
   void cycle();
 
   long long int countParticles(long long int clusterStep = -1);
-  double countBoxes(long long int clusterStep = -1);
   double computeDiameter(long long int clusterStep = -1);
-  void updateDimensionDataFiles();
+  double countBoxes(long long int clusterStep = -1);
 
 private:
   bool hasAnyMoved = false;
   bool hasSideParticles = false;
   bool mayBorn = false;
   Vec2 fieldCenter;
-  std::vector<long long int> clusterSteps;
   std::vector<std::reference_wrapper<Cell>> shellingCells;
 };
 

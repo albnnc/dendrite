@@ -19,9 +19,14 @@ void App::start()
       {
         field.cycle();
       }
-      if (mayUpdateDimensionDataFiles)
+      if (mayUpdateDimensionDataFiles &&
+          (dimensionDataFilesUpdateStep == -1 ||
+           field.stepNumber - dimensionDataFilesUpdateStep >=
+               stepsPerDimensionDataFileEntry))
       {
-        field.updateDimensionDataFiles();
+        std::cout << "Updating DDFs" << std::endl;
+        dimensionDataFilesUpdateStep = field.stepNumber;
+        updateDimensionDataFiles();
       }
     }
 

@@ -19,7 +19,6 @@ Field::Field(Config &config) : fieldSize(config.get<int>("field", "fieldSize")),
 {
   resize();
   cycle();
-  updateDimensionDataFiles();
 }
 
 }; // namespace dendrite

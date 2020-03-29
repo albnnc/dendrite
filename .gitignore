@@ -3,4 +3,5 @@
 .DS_Store
 
 /out
+/out_*
 /build

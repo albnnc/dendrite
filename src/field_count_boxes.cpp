@@ -51,7 +51,7 @@ double normalEq2(std::vector<double> x, std::vector<double> y)
 double Field::countBoxes(long long int clusterStep)
 {
   int interationsMax = 20;
-  double boxSize = 1;
+  double boxSize = 1.0;
   std::vector<double> x;
   std::vector<double> y;
 
@@ -103,7 +103,7 @@ double Field::countBoxes(long long int clusterStep)
     }
     x.push_back(boxSize);
     y.push_back(boxCount);
-    boxSize *= 0.8;
+    boxSize *= 0.85;
   }
 
   double clusterSize = computeDiameter(clusterStep);
