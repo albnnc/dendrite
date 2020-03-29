@@ -17,7 +17,7 @@ Field::Field(Config &config) : fieldSize(config.get<int>("field", "fieldSize")),
                                interactionDelta(config.get<double>("field", "interactionDelta")),
                                interactionDeltaForFreeze(config.get<double>("field", "interactionDeltaForFreeze"))
 {
-  resize(fieldSize);
+  resize();
   cycle();
   updateDimensionDataFiles();
 }

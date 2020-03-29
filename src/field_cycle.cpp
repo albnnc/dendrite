@@ -12,10 +12,7 @@ void Field::cycle()
   sort();
   collapse();
   die();
-  if (fieldType == "shelling" && !mayBorn && !hasAnyMoved)
-  {
-    resize(data.size() + sideResizeDelta);
-  }
+  resize();
   ++stepNumber;
 }
 

@@ -3,8 +3,24 @@
 namespace dendrite
 {
 
-void Field::resize(int size)
+void Field::resize()
 {
+  int size = data.size();
+  if (size < 1)
+  {
+    // constructor call
+    size = fieldSize;
+  }
+  else if (fieldType == "shelling" && !mayBorn && !hasAnyMoved)
+  {
+    // shelling upscale
+    size += sideResizeDelta;
+  }
+  else
+  {
+    return;
+  }
+
   int oldSize = data.size();
   for (int i = 0; i < oldSize; ++i)
   {

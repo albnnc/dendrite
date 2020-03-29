@@ -40,7 +40,7 @@ public:
 
   Field(Config &config);
 
-  void resize(int size);
+  void resize();
   void born();
   void die();
   void move();
