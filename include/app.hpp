@@ -34,7 +34,7 @@ private:
   bool hasGrid;
   bool mayIterate;
   bool mayUpdateDimensionDataFiles;
-  bool mayLogKeys;
+  bool mayLogDebug;
   std::string backgroundColor;
   std::string particleColor;
 

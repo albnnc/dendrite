@@ -16,7 +16,7 @@ App::App(Config &config) : windowSizePx(config.get<int>("app", "windowSizePx")),
                            mayIterate(config.get<bool>("app", "mayIterate")),
                            mayUpdateDimensionDataFiles(
                                config.get<bool>("app", "mayUpdateDimensionDataFiles")),
-                           mayLogKeys(config.get<bool>("app", "mayLogKeys")),
+                           mayLogDebug(config.get<bool>("app", "mayLogDebug")),
                            backgroundColor(config.get<std::string>("app", "backgroundColor")),
                            particleColor(config.get<std::string>("app", "particleColor")),
                            window(sf::VideoMode(windowSizePx, windowSizePx), "dendrite"),

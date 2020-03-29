@@ -7,8 +7,6 @@ void Config::parse(int argc, char *argv[])
 {
   try
   {
-    std::string configPath = "";
-
     cxxopts::Options options(argv[0]);
     options.add_options()(
         "c,config",

@@ -20,7 +20,10 @@ void App::start()
            field.stepNumber - dimensionDataFilesUpdateStep >=
                stepsPerDimensionDataFileEntry))
       {
-        std::cout << "Updating DDFs" << std::endl;
+        if (mayLogDebug)
+        {
+          std::cout << "Update dimension data files" << std::endl;
+        }
         dimensionDataFilesUpdateStep = field.stepNumber;
         updateDimensionDataFiles();
       }

@@ -28,7 +28,7 @@ public:
           << section
           << "."
           << variable
-          << "\" in config.ini"
+          << "\" in config"
           << std::endl
           << "Aborting"
           << std::endl;
@@ -40,6 +40,7 @@ public:
 private:
   inipp::Ini<char> ini;
   std::string getExecutableDir();
+  std::string configPath = "";
 };
 
 }; // namespace dendrite
