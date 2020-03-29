@@ -49,7 +49,7 @@ double Field::computeDiameter(long long int clusterStep)
     }
   }
 
-  double dSq = -1;
+  double diameter = -1;
   Vec2 translation = maxField - minField;
 
   for (int k = 0; k < populationMax; ++k)
@@ -77,14 +77,14 @@ double Field::computeDiameter(long long int clusterStep)
       }
 
       double t = (translation + q - p).length();
-      if (t > dSq)
+      if (t > diameter)
       {
-        dSq = t;
+        diameter = t;
       }
     }
   }
 
-  return std::sqrt(dSq);
+  return diameter;
 }
 
 }; // namespace dendrite

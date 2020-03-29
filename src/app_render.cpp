@@ -66,16 +66,27 @@ void App::render()
     sf::Color color;
     if (isFrozen)
     {
-      if (particleColor == "contrast")
-      {
-        color = getContrastColor();
-      }
-      else
+      if (particleColor == "gradient")
       {
         color = sf::Color(
             ((double)p.freezeStep / (double)field.stepNumber) * 255,
             0,
             255 - (((double)p.freezeStep / (double)field.stepNumber) * 255));
+      }
+      else if (particleColor == "contrast")
+      {
+        color = getContrastColor();
+      }
+      else if (particleColor == "cluster")
+      {
+        int clusterIndex =
+            std::distance(
+                field.clusterSteps.begin(),
+                std::find(
+                    field.clusterSteps.begin(),
+                    field.clusterSteps.end(),
+                    p.clusterStep));
+        color = getClusterColor(clusterIndex);
       }
     }
     else

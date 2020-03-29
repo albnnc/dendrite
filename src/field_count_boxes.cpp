@@ -103,7 +103,7 @@ double Field::countBoxes(long long int clusterStep)
     }
     x.push_back(boxSize);
     y.push_back(boxCount);
-    boxSize *= 0.85;
+    boxSize *= 0.9;
   }
 
   double clusterSize = computeDiameter(clusterStep);

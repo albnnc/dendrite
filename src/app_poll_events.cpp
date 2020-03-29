@@ -81,7 +81,18 @@ void App::pollEvents()
       {
         std::cout << "Change particles color"
                   << std::endl;
-        particleColor = particleColor == "contrast" ? "gradient" : "contrast";
+        if (particleColor == "gradient")
+        {
+          particleColor = "contrast";
+        }
+        else if (particleColor == "contrast")
+        {
+          particleColor = "cluster";
+        }
+        else if (particleColor == "cluster")
+        {
+          particleColor = "gradient";
+        }
       }
 
       if (event.key.code == 17) // R

@@ -1,6 +1,7 @@
 #pragma once
 
 #include <iostream>
+#include <algorithm>
 #include <filesystem>
 #include <ctime>
 #include <SFML/Graphics.hpp>
@@ -54,6 +55,7 @@ private:
   std::string getExecutableDir();
   std::string getCwd();
   sf::Color getContrastColor();
+  sf::Color getClusterColor(int clusterIndex);
 };
 
 }; // namespace dendrite
