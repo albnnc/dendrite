@@ -47,6 +47,8 @@ private:
   std::string outDir = "out";
 
   void prepareOutDir();
+  std::string getExecutableDir();
+  std::string getCwd();
   sf::Color getContrastColor();
 };
 

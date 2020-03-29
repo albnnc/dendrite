@@ -2,10 +2,10 @@
 #include "app.hpp"
 #include "config.hpp"
 
-int main()
+int main(int argc, char *argv[])
 {
   dendrite::Config config;
-  config.read();
+  config.parse(argc, argv);
 
   dendrite::App app(config);
   app.start();

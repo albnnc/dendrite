@@ -1,12 +1,11 @@
 CC = g++
-CFLAGS = -std=c++17 -Wall -O2 -Iinclude
+CFLAGS = -std=c++17 -Wall -O2 -Iinclude -Ivendor
 LFLAGS =
 LIB = -fopenmp -lsfml-graphics -lsfml-window -lsfml-system
 
 EXE = build/dendrite
 
 SRC_DIR = src
-INC_DIR = include
 BUILD_DIR = build
 
 SRC := $(shell find $(SRC_DIR) -name '*.cpp' -exec basename {} \;)

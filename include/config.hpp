@@ -2,7 +2,9 @@
 
 #include <iostream>
 #include <fstream>
+#include <filesystem>
 #include "inipp.hpp"
+#include "cxxopts.hpp"
 
 namespace dendrite
 {
@@ -10,15 +12,9 @@ namespace dendrite
 class Config
 {
 public:
-  Config()
-  {
-  }
+  Config();
 
-  void read()
-  {
-    std::ifstream ifs("config.ini");
-    ini.parse(ifs);
-  }
+  void parse(int argc, char *argv[]);
 
   template <typename T>
   T get(std::string section, std::string variable)
@@ -43,6 +39,7 @@ public:
 
 private:
   inipp::Ini<char> ini;
+  std::string getExecutableDir();
 };
 
 }; // namespace dendrite
