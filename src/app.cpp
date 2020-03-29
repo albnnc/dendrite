@@ -3,9 +3,7 @@
 namespace dendrite
 {
 
-App::App(Config &config) : desiredThreadsNumber(
-                               config.get<int>("app", "desiredThreadsNumber")),
-                           windowSizePx(config.get<int>("app", "windowSizePx")),
+App::App(Config &config) : windowSizePx(config.get<int>("app", "windowSizePx")),
                            particleRadiusDeltaPx(
                                config.get<double>("app", "particleRadiusDeltaPx")),
                            sleepMs(config.get<int>("app", "sleepMs")),
@@ -24,6 +22,7 @@ App::App(Config &config) : desiredThreadsNumber(
                            window(sf::VideoMode(windowSizePx, windowSizePx), "dendrite"),
                            field(config)
 {
+
   if (!font.loadFromFile("roboto.ttf"))
   {
     std::cout << "Unable to load font";

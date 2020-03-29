@@ -9,6 +9,7 @@
 #include "vec2.hpp"
 #include "particle.hpp"
 #include "data_file.hpp"
+#include "random.hpp"
 
 namespace dendrite
 {
@@ -60,6 +61,7 @@ private:
   bool mayBorn = false;
   Vec2 fieldCenter;
   std::vector<std::reference_wrapper<Cell>> shellingCells;
+  Random random;
 };
 
 }; // namespace dendrite

@@ -25,12 +25,13 @@ void Field::born()
         [](const Particle &p) {
           return p.bornStep < 0;
         });
+
     while (it != cell.end() && birthTries < particleBirthTriesMax)
     {
-      if ((double)std::rand() / RAND_MAX < particleBirthProbability)
+      if (random.getDouble() < particleBirthProbability)
       {
-        it->x = (double)std::rand() / RAND_MAX - 0.5;
-        it->y = (double)std::rand() / RAND_MAX - 0.5;
+        it->x = random.getDouble() - 0.5;
+        it->y = random.getDouble() - 0.5;
         it->bornStep = stepNumber;
         ++it;
       }

@@ -24,7 +24,6 @@ public:
 
 private:
   // config.ini group
-  int desiredThreadsNumber;
   int windowSizePx;
   double particleRadiusDeltaPx;
   int sleepMs;

@@ -28,8 +28,8 @@ void Field::move()
           }
           continue;
         }
-        Vec2 delta(((double)rand() / RAND_MAX > 0.5 ? 1 : -1) * (double)rand() / RAND_MAX,
-                   ((double)rand() / RAND_MAX > 0.5 ? 1 : -1) * (double)rand() / RAND_MAX);
+        Vec2 delta((random.getDouble() > 0.5 ? 1 : -1) * random.getDouble(),
+                   (random.getDouble() > 0.5 ? 1 : -1) * random.getDouble());
         Vec2 shift = fieldCenter - Vec2(i + 0.5 + p.x, j + 0.5 + p.y);
         p += delta.normalize() * particleDeltaMax +
              shift.normalize() * particleDeltaShift;
