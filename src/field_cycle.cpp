@@ -12,7 +12,7 @@ void Field::cycle()
   sort();
   collapse();
   die();
-  if (particleBirthStrategy == "periphery" && !mayBorn && !hasAnyMoved)
+  if (fieldType == "shelling" && !mayBorn && !hasAnyMoved)
   {
     resize(data.size() + sideResizeDelta);
   }

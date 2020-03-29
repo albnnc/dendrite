@@ -38,7 +38,7 @@ void Field::resize(int size)
   fieldCenter = Vec2((double)fieldSize / 2, (double)fieldSize / 2);
 
   double peripheryRadius = (double)(fieldSize - 1) / 2;
-  peripheryCells.clear();
+  shellingCells.clear();
   for (int i = 0; i < fieldSize; ++i)
   {
     for (int j = 0; j < fieldSize; ++j)
@@ -65,7 +65,7 @@ void Field::resize(int size)
       }
       if (hasInside && hasOutside)
       {
-        peripheryCells.push_back(cell);
+        shellingCells.push_back(cell);
       }
     }
   }

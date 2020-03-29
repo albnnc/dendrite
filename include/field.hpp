@@ -25,13 +25,13 @@ public:
 
   // config.ini group
   int fieldSize;
+  std::string fieldType;
   int sideResizeDelta;
   int populationMax;
   int populationCritical;
   long long int particleActiveStepsMax;
   double particleBirthProbability;
   int particleBirthTriesMax;
-  std::string particleBirthStrategy;
   double particleRadius;
   double particleDeltaMax;
   double particleDeltaShift;
@@ -61,7 +61,7 @@ private:
   bool mayBorn = false;
   Vec2 fieldCenter;
   std::vector<long long int> clusterSteps;
-  std::vector<std::reference_wrapper<Cell>> peripheryCells;
+  std::vector<std::reference_wrapper<Cell>> shellingCells;
 };
 
 }; // namespace dendrite

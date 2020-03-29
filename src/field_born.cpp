@@ -38,7 +38,7 @@ void Field::born()
     }
   };
 
-  if (particleBirthStrategy == "bouillon" && stepNumber == 1)
+  if (fieldType == "bouillon" && stepNumber == 1)
   {
 #pragma omp parallel for
     for (int i = 0; i < fieldSize; ++i)
@@ -50,11 +50,11 @@ void Field::born()
     }
   }
 
-  if (particleBirthStrategy == "periphery")
+  if (fieldType == "shelling")
   {
 #pragma omp parallel for
-    for (auto it = peripheryCells.begin();
-         it != peripheryCells.end();
+    for (auto it = shellingCells.begin();
+         it != shellingCells.end();
          ++it)
     {
       bornInCell(*it);
