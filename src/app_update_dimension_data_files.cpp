@@ -5,8 +5,18 @@ namespace dendrite
 
 void App::updateDimensionDataFiles()
 {
-  for (auto it = field.clusterSteps.begin();
-       it != field.clusterSteps.end();
+  auto stepsToUpdate(field.clusterSteps);
+  if (
+      std::find(
+          stepsToUpdate.begin(),
+          stepsToUpdate.end(),
+          -1) == stepsToUpdate.end())
+  {
+    stepsToUpdate.push_back(-1);
+  }
+
+  for (auto it = stepsToUpdate.begin();
+       it != stepsToUpdate.end();
        ++it)
   {
     int step = *it;
@@ -23,6 +33,10 @@ void App::updateDimensionDataFiles()
     }
     long long int count = field.countParticles(step);
     double dimension = field.countBoxes(step);
+    if (dimension < 0)
+    {
+      continue;
+    }
     auto &dfData = (*df).data;
     if ((dfData.size() == 0 || count != dfData.back().x) &&
         (dimension >= 1 && dimension <= 2))

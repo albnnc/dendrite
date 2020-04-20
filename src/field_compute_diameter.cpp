@@ -49,6 +49,11 @@ double Field::computeDiameter(long long int clusterStep)
     }
   }
 
+  if (minField == Vec2(-1, -1) || maxField == Vec2(-1, -1))
+  {
+    return -1;
+  }
+
   double diameter = -1;
   Vec2 translation = maxField - minField;
 

@@ -22,6 +22,11 @@ public:
     return *this;
   }
 
+  bool operator==(const Vec2 &v)
+  {
+    return x == v.x && y == v.y;
+  }
+
   Vec2 operator+(const Vec2 &v) { return Vec2(x + v.x, y + v.y); }
   Vec2 operator-(const Vec2 &v) { return Vec2(x - v.x, y - v.y); }
 

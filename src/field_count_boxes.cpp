@@ -107,6 +107,11 @@ double Field::countBoxes(long long int clusterStep)
   }
 
   double clusterSize = computeDiameter(clusterStep);
+  if (clusterSize == -1)
+  {
+    return -1;
+  }
+
   for (size_t i = 0; i < x.size(); ++i)
   {
     x[i] = std::log(clusterSize / x[i]);
