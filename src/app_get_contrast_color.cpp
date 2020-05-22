@@ -1,10 +1,8 @@
 #include "app.hpp"
 
-namespace dendrite
-{
+namespace dendrite {
 
-sf::Color App::getContrastColor()
-{
+sf::Color App::getContrastColor() {
   return backgroundColor == "dark"
              ? sf::Color::White
              : sf::Color::Black;

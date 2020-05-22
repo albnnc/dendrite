@@ -1,20 +1,15 @@
 #include "app.hpp"
 
-namespace dendrite
-{
+namespace dendrite {
 
-void App::render()
-{
+void App::render() {
   int fieldSize = field.data.size();
   int cellSizePx = (windowSizePx / fieldSize);
-  double particleRadiusPx = std::max(
-      cellSizePx * field.particleRadius + particleRadiusDeltaPx,
-      0.5);
+  double particleRadiusPx =
+      std::max(cellSizePx * field.particleRadius + particleRadiusDeltaPx, 0.5);
 
-  if (hasGrid)
-  {
-    for (int i = 0; i < fieldSize; ++i)
-    {
+  if (hasGrid) {
+    for (int i = 0; i < fieldSize; ++i) {
       sf::Color color(130, 130, 130, 130);
       sf::Vertex line1[] = {
           sf::Vertex(sf::Vector2f((i + 1) * cellSizePx, 0), color),
@@ -27,19 +22,13 @@ void App::render()
     }
   }
 
-  auto forEachParticle = [this,
-                          fieldSize,
-                          cellSizePx](
+  auto forEachParticle = [this, fieldSize, cellSizePx](
                              std::function<void(Particle p, Vec2 v)> fn) {
-    for (int i = 0; i < fieldSize; ++i)
-    {
-      for (int j = 0; j < fieldSize; ++j)
-      {
-        for (int k = 0; k < field.populationMax; ++k)
-        {
+    for (int i = 0; i < fieldSize; ++i) {
+      for (int j = 0; j < fieldSize; ++j) {
+        for (int k = 0; k < field.populationMax; ++k) {
           Particle p = field.data[i][j][k];
-          if (p.bornStep < 0)
-          {
+          if (p.bornStep < 0) {
             break;
           }
           Vec2 v((i + 0.5 + p.x) * cellSizePx, (j + 0.5 + p.y) * cellSizePx);
@@ -50,12 +39,10 @@ void App::render()
   };
 
   forEachParticle([this, particleRadiusPx](Particle p, Vec2 v) {
-    if (std::abs(p.x) > 0.5 || std::abs(p.y) > 0.5)
-    {
+    if (std::abs(p.x) > 0.5 || std::abs(p.y) > 0.5) {
       std::cout << "Particle out of bounds: " << p << std::endl;
     }
-    if (p.freezeStep < 0 && !hasActiveParticles)
-    {
+    if (p.freezeStep < 0 && !hasActiveParticles) {
       return;
     }
     sf::CircleShape circle(particleRadiusPx);
@@ -64,33 +51,23 @@ void App::render()
     bool isFrozen = p.freezeStep > 0;
 
     sf::Color color;
-    if (isFrozen)
-    {
-      if (particleColor == "gradient")
-      {
+    if (isFrozen) {
+      if (particleColor == "gradient") {
         color = sf::Color(
             ((double)p.freezeStep / (double)field.stepNumber) * 255,
             0,
             255 - (((double)p.freezeStep / (double)field.stepNumber) * 255));
-      }
-      else if (particleColor == "contrast")
-      {
+      } else if (particleColor == "contrast") {
         color = getContrastColor();
-      }
-      else if (particleColor == "cluster")
-      {
+      } else if (particleColor == "cluster") {
         int clusterIndex =
-            std::distance(
-                field.clusterSteps.begin(),
-                std::find(
-                    field.clusterSteps.begin(),
-                    field.clusterSteps.end(),
-                    p.clusterStep));
+            std::distance(field.clusterSteps.begin(),
+                          std::find(field.clusterSteps.begin(),
+                                    field.clusterSteps.end(),
+                                    p.clusterStep));
         color = getClusterColor(clusterIndex);
       }
-    }
-    else
-    {
+    } else {
       color = sf::Color(130, 130, 130);
     }
     circle.setFillColor(color);
@@ -98,12 +75,10 @@ void App::render()
   });
 
   forEachParticle([this, cellSizePx, particleRadiusPx](Particle p, Vec2 v) {
-    if (hasLabels && p.freezeStep > 0 && p.bornStep == p.clusterStep)
-    {
+    if (hasLabels && p.freezeStep > 0 && p.bornStep == p.clusterStep) {
       sf::Color color = getContrastColor();
-      sf::Vertex line[] = {
-          sf::Vertex(sf::Vector2f(v.x, v.y), color),
-          sf::Vertex(sf::Vector2f(v.x + 20, v.y + 20), color)};
+      sf::Vertex line[] = {sf::Vertex(sf::Vector2f(v.x, v.y), color),
+                           sf::Vertex(sf::Vector2f(v.x + 20, v.y + 20), color)};
       window.draw(line, 2, sf::Lines);
 
       sf::Text text;

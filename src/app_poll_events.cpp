@@ -1,22 +1,16 @@
 #include "app.hpp"
 
-namespace dendrite
-{
+namespace dendrite {
 
-void App::pollEvents()
-{
+void App::pollEvents() {
   sf::Event event;
-  while (window.pollEvent(event))
-  {
-    if (event.type == sf::Event::Closed)
-    {
+  while (window.pollEvent(event)) {
+    if (event.type == sf::Event::Closed) {
       window.close();
     }
 
-    if (event.type == sf::Event::KeyReleased)
-    {
-      if (mayLogDebug)
-      {
+    if (event.type == sf::Event::KeyReleased) {
+      if (mayLogDebug) {
         std::cout << "Key pressed: " << event.key.code << std::endl;
       }
 
@@ -36,8 +30,7 @@ void App::pollEvents()
       if (event.key.control && event.key.code == 3) // Ctrl + D
       {
         prepareOutDir();
-        for (auto df : dimensionDataFiles)
-        {
+        for (auto df : dimensionDataFiles) {
           df.write(outDir + "/" + df.title + ".dat");
         }
         std::cout << "Dimensions data files saved" << std::endl;
@@ -81,16 +74,11 @@ void App::pollEvents()
       {
         std::cout << "Change particles color"
                   << std::endl;
-        if (particleColor == "gradient")
-        {
+        if (particleColor == "gradient") {
           particleColor = "contrast";
-        }
-        else if (particleColor == "contrast")
-        {
+        } else if (particleColor == "contrast") {
           particleColor = "cluster";
-        }
-        else if (particleColor == "cluster")
-        {
+        } else if (particleColor == "cluster") {
           particleColor = "gradient";
         }
       }

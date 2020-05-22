@@ -1,10 +1,8 @@
 #include "config.hpp"
 
-namespace dendrite
-{
+namespace dendrite {
 
-Config::Config()
-{
+Config::Config() {
 }
 
 }; // namespace dendrite

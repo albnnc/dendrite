@@ -1,21 +1,19 @@
 #pragma once
 
-#include <cstdlib>
-#include <cmath>
-#include <algorithm>
-#include <vector>
-#include <iostream>
 #include "config.hpp"
-#include "vec2.hpp"
-#include "particle.hpp"
 #include "data_file.hpp"
+#include "particle.hpp"
 #include "random.hpp"
+#include "vec2.hpp"
+#include <algorithm>
+#include <cmath>
+#include <cstdlib>
+#include <iostream>
+#include <vector>
 
-namespace dendrite
-{
+namespace dendrite {
 
-class Field
-{
+class Field {
 public:
   typedef std::vector<Particle> Cell;
   typedef std::vector<std::vector<Cell>> Data;
@@ -38,6 +36,7 @@ public:
   double particleDeltaShift;
   double interactionDelta;
   double interactionDeltaForFreeze;
+  bool mayLogDebug;
 
   Field(Config &config);
 

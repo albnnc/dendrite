@@ -1,14 +1,12 @@
 #pragma once
 
-#include <random>
 #include <iostream>
 #include <omp.h>
+#include <random>
 
-namespace dendrite
-{
+namespace dendrite {
 
-class Random
-{
+class Random {
 public:
   Random();
   double getDouble();

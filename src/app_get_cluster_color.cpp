@@ -1,10 +1,8 @@
 #include "app.hpp"
 
-namespace dendrite
-{
+namespace dendrite {
 
-sf::Color App::getClusterColor(int clusterIndex)
-{
+sf::Color App::getClusterColor(int clusterIndex) {
   std::vector<sf::Color> colors = {
       sf::Color(200, 60, 0),
       sf::Color(80, 150, 190),

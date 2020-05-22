@@ -1,12 +1,10 @@
 #include "config.hpp"
 
-namespace dendrite
-{
+namespace dendrite {
 
 #ifdef _WIN32
 #include <windows.h>
-std::string Config::getExecutableDir()
-{
+std::string Config::getExecutableDir() {
   char result[512];
   auto executablePath = std::string(
       result,
@@ -17,8 +15,7 @@ std::string Config::getExecutableDir()
 
 #ifdef __linux__
 #include <unistd.h>
-std::string Config::getExecutableDir()
-{
+std::string Config::getExecutableDir() {
   char result[512];
   ssize_t count = readlink("/proc/self/exe", result, 512);
   auto executablePath = std::string(

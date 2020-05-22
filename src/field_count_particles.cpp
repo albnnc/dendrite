@@ -1,26 +1,19 @@
 #include "field.hpp"
 
-namespace dendrite
-{
+namespace dendrite {
 
-long long int Field::countParticles(long long int clusterStep)
-{
+long long int Field::countParticles(long long int clusterStep) {
   long long int count = 0;
 
-  for (int i = 0; i < fieldSize; ++i)
-  {
-    for (int j = 0; j < fieldSize; ++j)
-    {
-      for (int k = 0; k < populationMax; ++k)
-      {
+  for (int i = 0; i < fieldSize; ++i) {
+    for (int j = 0; j < fieldSize; ++j) {
+      for (int k = 0; k < populationMax; ++k) {
         Particle &p = data[i][j][k];
-        if (p.bornStep < 0)
-        {
+        if (p.bornStep < 0) {
           break;
         }
         if ((clusterStep == -1 && p.freezeStep > 0) ||
-            (clusterStep == p.clusterStep))
-        {
+            (clusterStep == p.clusterStep)) {
           ++count;
         }
       }

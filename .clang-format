@@ -1,0 +1,12 @@
+---
+Language: Cpp
+FixNamespaceComments: true
+NamespaceIndentation: None
+BreakBeforeBraces: Attach
+AlignAfterOpenBracket: Align
+ColumnLimit: 0
+BinPackArguments: false
+BinPackParameters: false
+IncludeBlocks: Merge
+---
+

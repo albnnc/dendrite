@@ -1,29 +1,21 @@
 #include "field.hpp"
 
-namespace dendrite
-{
+namespace dendrite {
 
-void Field::move()
-{
+void Field::move() {
   hasAnyMoved = false;
   hasSideParticles = false;
 
 #pragma omp parallel for
-  for (int i = 0; i < fieldSize; ++i)
-  {
-    for (int j = 0; j < fieldSize; ++j)
-    {
-      for (int k = 0; k < populationMax; ++k)
-      {
+  for (int i = 0; i < fieldSize; ++i) {
+    for (int j = 0; j < fieldSize; ++j) {
+      for (int k = 0; k < populationMax; ++k) {
         Particle &p = data[i][j][k];
-        if (p.bornStep < 0)
-        {
+        if (p.bornStep < 0) {
           break;
         }
-        if (p.freezeStep > 0)
-        {
-          if (i == 0 || j == 0 || i == fieldSize - 1 || j == fieldSize - 1)
-          {
+        if (p.freezeStep > 0) {
+          if (i == 0 || j == 0 || i == fieldSize - 1 || j == fieldSize - 1) {
             hasSideParticles = true;
           }
           continue;

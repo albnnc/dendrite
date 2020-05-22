@@ -1,10 +1,8 @@
 #include "field.hpp"
 
-namespace dendrite
-{
+namespace dendrite {
 
-void Field::born()
-{
+void Field::born() {
   mayBorn = false;
   auto bornInCell = [this](Cell &cell) {
     auto frozen = std::find_if(
@@ -13,8 +11,7 @@ void Field::born()
         [](const Particle &p) {
           return p.freezeStep > 0;
         });
-    if (frozen != cell.end())
-    {
+    if (frozen != cell.end()) {
       return;
     }
     mayBorn = true;
@@ -26,10 +23,8 @@ void Field::born()
           return p.bornStep < 0;
         });
 
-    while (it != cell.end() && birthTries < particleBirthTriesMax)
-    {
-      if (random.getDouble() < particleBirthProbability)
-      {
+    while (it != cell.end() && birthTries < particleBirthTriesMax) {
+      if (random.getDouble() < particleBirthProbability) {
         it->x = random.getDouble() - 0.5;
         it->y = random.getDouble() - 0.5;
         it->bornStep = stepNumber;
@@ -39,25 +34,20 @@ void Field::born()
     }
   };
 
-  if (fieldType == "bouillon" && stepNumber == 1)
-  {
+  if (fieldType == "bouillon" && stepNumber == 1) {
 #pragma omp parallel for
-    for (int i = 0; i < fieldSize; ++i)
-    {
-      for (int j = 0; j < fieldSize; ++j)
-      {
+    for (int i = 0; i < fieldSize; ++i) {
+      for (int j = 0; j < fieldSize; ++j) {
         bornInCell(data[i][j]);
       }
     }
   }
 
-  if (fieldType == "shelling")
-  {
+  if (fieldType == "shelling") {
 #pragma omp parallel for
     for (auto it = shellingCells.begin();
          it != shellingCells.end();
-         ++it)
-    {
+         ++it) {
       bornInCell(*it);
     }
   }

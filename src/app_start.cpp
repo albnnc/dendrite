@@ -1,27 +1,20 @@
 #include "app.hpp"
 
-namespace dendrite
-{
+namespace dendrite {
 
-void App::start()
-{
-  while (window.isOpen())
-  {
+void App::start() {
+  while (window.isOpen()) {
     pollEvents();
 
-    if (mayIterate)
-    {
-      for (int i = 0; i < stepsPerFrame; ++i)
-      {
+    if (mayIterate) {
+      for (int i = 0; i < stepsPerFrame; ++i) {
         field.cycle();
       }
       if (mayUpdateDimensionDataFiles &&
           (dimensionDataFilesUpdateStep == -1 ||
            field.stepNumber - dimensionDataFilesUpdateStep >=
-               stepsPerDimensionDataFileEntry))
-      {
-        if (mayLogDebug)
-        {
+               stepsPerDimensionDataFileEntry)) {
+        if (mayLogDebug) {
           std::cout << "Update dimension data files" << std::endl;
         }
         dimensionDataFilesUpdateStep = field.stepNumber;

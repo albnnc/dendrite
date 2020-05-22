@@ -1,7 +1,6 @@
 #include "app.hpp"
 
-namespace dendrite
-{
+namespace dendrite {
 
 App::App(Config &config) : windowSizePx(config.get<int>("app", "windowSizePx")),
                            particleRadiusDeltaPx(
@@ -20,11 +19,8 @@ App::App(Config &config) : windowSizePx(config.get<int>("app", "windowSizePx")),
                            backgroundColor(config.get<std::string>("app", "backgroundColor")),
                            particleColor(config.get<std::string>("app", "particleColor")),
                            window(sf::VideoMode(windowSizePx, windowSizePx), "dendrite"),
-                           field(config)
-{
-
-  if (!font.loadFromFile("roboto.ttf"))
-  {
+                           field(config) {
+  if (!font.loadFromFile("roboto.ttf")) {
     std::cout << "Unable to load font";
     exit(1);
   }

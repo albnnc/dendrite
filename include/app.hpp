@@ -1,20 +1,18 @@
 #pragma once
 
-#include <iostream>
-#include <algorithm>
-#include <filesystem>
-#include <ctime>
-#include <SFML/Graphics.hpp>
-#include <SFML/System.hpp>
-#include <omp.h>
 #include "config.hpp"
 #include "field.hpp"
+#include <SFML/Graphics.hpp>
+#include <SFML/System.hpp>
+#include <algorithm>
+#include <ctime>
+#include <filesystem>
+#include <iostream>
+#include <omp.h>
 
-namespace dendrite
-{
+namespace dendrite {
 
-class App
-{
+class App {
 public:
   App(Config &config);
 

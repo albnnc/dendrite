@@ -1,12 +1,9 @@
 #include "app.hpp"
 
-namespace dendrite
-{
+namespace dendrite {
 
-void App::prepareOutDir()
-{
-  if (std::filesystem::is_directory(outDir))
-  {
+void App::prepareOutDir() {
+  if (std::filesystem::is_directory(outDir)) {
     return;
   }
   std::filesystem::create_directory(outDir);

@@ -1,10 +1,8 @@
-#include <iostream>
 #include "app.hpp"
 #include "config.hpp"
+#include <iostream>
 
-int main(int argc, char *argv[])
-{
-
+int main(int argc, char *argv[]) {
   dendrite::Config config;
   config.parse(argc, argv);
 

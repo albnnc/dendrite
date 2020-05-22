@@ -1,12 +1,9 @@
 #include "config.hpp"
 
-namespace dendrite
-{
+namespace dendrite {
 
-void Config::parse(int argc, char *argv[])
-{
-  try
-  {
+void Config::parse(int argc, char *argv[]) {
+  try {
     cxxopts::Options options(argv[0]);
     options.add_options()(
         "c,config",
@@ -15,20 +12,16 @@ void Config::parse(int argc, char *argv[])
     options.add_options()("h,help", "Show help");
     auto parsed = options.parse(argc, argv);
 
-    if (parsed.count("help"))
-    {
+    if (parsed.count("help")) {
       std::cout << options.help({""}) << std::endl;
       exit(0);
     }
 
-    if (parsed.count("config"))
-    {
+    if (parsed.count("config")) {
       std::string cwd = std::filesystem::current_path();
       std::string path = parsed["config"].as<std::string>();
       configPath = (std::filesystem::path(cwd) / path).string();
-    }
-    else
-    {
+    } else {
       configPath = std::filesystem::path(getExecutableDir()) / "config.ini";
     }
 
@@ -38,9 +31,9 @@ void Config::parse(int argc, char *argv[])
               << std::endl;
     std::ifstream ifs(configPath);
     ini.parse(ifs);
-  }
-  catch (const cxxopts::OptionException &e)
-  {
+    ini.default_section(ini.sections["common"]);
+    ini.interpolate();
+  } catch (const cxxopts::OptionException &e) {
     std::cout << "Error parsing options: " << e.what() << std::endl;
     exit(1);
   }
