@@ -1,9 +1,14 @@
 #include "field.hpp"
 
+#pragma omp declare reduction(merge                         \
+                              : std::vector <long long int> \
+                              : omp_out.insert(omp_out.end(), omp_in.begin(), omp_in.end()))
+
 namespace dendrite {
 
 void Field::collapse() {
-#pragma omp parallel for
+#pragma omp parallel for reduction(merge \
+                                   : clusterSteps)
   for (int i = 0; i < fieldSize; ++i) {
     for (int j = 0; j < fieldSize; ++j) {
       auto &cell = data[i][j];
