@@ -29,10 +29,10 @@ set border 31 lw 2.0
 #   pointsize 1.5 \
 #   title "D(N)"
 
-# Fractal dimension
+# Performance
 #
-set title "N_{steps/s}(N_{cores})"
-set xlabel "N_{cores}"
+set title "N_{steps/s}(N_{threads})"
+set xlabel "N_{threads}"
 set ylabel "N_{steps/s}"
 set format y '%.0f'
 set xrange [0:13]
@@ -43,4 +43,4 @@ plot file using ($1):($2) \
   linewidth 3 \
   pointtype 7 \
   pointsize 1.5 \
-  title "N_{steps/s}(N_{cores})"
+  title "N_{steps/s}(N_{threads})"
