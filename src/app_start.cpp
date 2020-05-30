@@ -19,7 +19,7 @@ void App::start() {
                     << " steps during "
                     << seconds
                     << " s ("
-                    << seconds / stepsPerFrame
+                    << stepsPerFrame / seconds
                     << " steps/s)"
                     << std::endl;
         }
