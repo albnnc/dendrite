@@ -5,6 +5,7 @@
 #include <SFML/Graphics.hpp>
 #include <SFML/System.hpp>
 #include <algorithm>
+#include <chrono>
 #include <ctime>
 #include <filesystem>
 #include <iostream>

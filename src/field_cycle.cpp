@@ -4,35 +4,35 @@ namespace dendrite {
 
 void Field::cycle() {
   if (mayLogDebug) {
-    std::cout << "born..." << std::endl;
+    std::cout << "Borning" << std::endl;
   }
   born();
   if (mayLogDebug) {
-    std::cout << "move..." << std::endl;
+    std::cout << "Moving" << std::endl;
   }
   move();
   if (mayLogDebug) {
-    std::cout << "join..." << std::endl;
+    std::cout << "Joining" << std::endl;
   }
   join();
   if (mayLogDebug) {
-    std::cout << "arrange..." << std::endl;
+    std::cout << "Arranging" << std::endl;
   }
   arrange();
   if (mayLogDebug) {
-    std::cout << "sort..." << std::endl;
+    std::cout << "Sorting" << std::endl;
   }
   sort();
   if (mayLogDebug) {
-    std::cout << "collapse..." << std::endl;
+    std::cout << "Collapsing" << std::endl;
   }
   collapse();
   if (mayLogDebug) {
-    std::cout << "die..." << std::endl;
+    std::cout << "Dieing" << std::endl;
   }
   die();
   if (mayLogDebug) {
-    std::cout << "resize..." << std::endl;
+    std::cout << "Resizing" << std::endl;
   }
   resize();
   ++stepNumber;

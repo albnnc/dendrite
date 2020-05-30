@@ -8,7 +8,21 @@ void App::start() {
 
     if (mayIterate) {
       for (int i = 0; i < stepsPerFrame; ++i) {
+        auto begin = std::chrono::system_clock::now();
         field.cycle();
+        if (mayLogDebug) {
+          auto end = std::chrono::system_clock::now();
+          std::chrono::duration<double> diff = end - begin;
+          double seconds = diff.count();
+          std::cout << "Computed "
+                    << stepsPerFrame
+                    << " steps during "
+                    << seconds
+                    << " s ("
+                    << seconds / stepsPerFrame
+                    << " steps/s)"
+                    << std::endl;
+        }
       }
       if (mayUpdateDimensionDataFiles &&
           (dimensionDataFilesUpdateStep == -1 ||
