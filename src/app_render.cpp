@@ -2,11 +2,63 @@
 
 namespace dendrite {
 
+// TODO: вынести в метод класса
+void drawThickLine(
+    sf::RenderTarget &target,
+    const sf::Vector2f &p1,
+    const sf::Vector2f &p2,
+    sf::Color color = sf::Color::Black,
+    float thickness = 1) {
+  sf::Vertex vertices[4];
+  sf::Vector2f direction = p2 - p1;
+  sf::Vector2f unitDirection = direction / std::sqrt(direction.x * direction.x + direction.y * direction.y);
+  sf::Vector2f unitPerpendicular(-unitDirection.y, unitDirection.x);
+
+  sf::Vector2f offset = (thickness / 2.0f) * unitPerpendicular;
+
+  vertices[0].position = p1 + offset;
+  vertices[1].position = p2 + offset;
+  vertices[2].position = p2 - offset;
+  vertices[3].position = p1 - offset;
+
+  for (int i = 0; i < 4; ++i) {
+    vertices[i].color = color;
+  }
+  target.draw(vertices, 4, sf::Quads);
+}
+
+// TODO: вынести в метод класса
+void drawPopup(
+    sf::RenderTarget &target,
+    const sf::Vector2f &position,
+    const std::string data,
+    sf::Font font,
+    sf::Color color = sf::Color::Black,
+    sf::Color outline = sf::Color::Black) {
+  drawThickLine(target, position, position + sf::Vector2f(30, 30), outline, 4);
+  drawThickLine(
+      target,
+      position + sf::Vector2f(1, 1),
+      position + sf::Vector2f(29, 29),
+      color,
+      2);
+  sf::Text text;
+  text.setFont(font);
+  text.setString(data);
+  text.setCharacterSize(14);
+  text.setFillColor(color);
+  text.setOutlineColor(outline);
+  text.setOutlineThickness(2);
+  text.setPosition(position.x + 35, position.y + 35);
+  target.draw(text);
+}
+
 void App::render() {
   int fieldSize = field.data.size();
   int cellSizePx = (windowSizePx / fieldSize);
   double particleRadiusPx =
       std::max(cellSizePx * field.particleRadius + particleRadiusDeltaPx, 0.5);
+  sf::Vector2i mousePosition = sf::Mouse::getPosition() - window.getPosition();
 
   if (hasGrid) {
     for (int i = 0; i < fieldSize; ++i) {
@@ -23,7 +75,10 @@ void App::render() {
   }
 
   auto forEachParticle = [this, fieldSize, cellSizePx](
-                             std::function<void(Particle p, Vec2 v)> fn) {
+                             std::function<void(
+                                 Particle particle,
+                                 Vec2 position,
+                                 Vec2 cellPosition)> fn) {
     for (int i = 0; i < fieldSize; ++i) {
       for (int j = 0; j < fieldSize; ++j) {
         for (int k = 0; k < field.populationMax; ++k) {
@@ -31,32 +86,35 @@ void App::render() {
           if (p.bornStep < 0) {
             break;
           }
-          Vec2 v((i + 0.5 + p.x) * cellSizePx, (j + 0.5 + p.y) * cellSizePx);
-          fn(p, v);
+          Vec2 cellPosition(i, j);
+          Vec2 position = (cellPosition + Vec2(0.5, 0.5) + p) * cellSizePx;
+          fn(p, position, cellPosition);
         }
       }
     }
   };
 
-  forEachParticle([this, particleRadiusPx](Particle p, Vec2 v) {
-    if (std::abs(p.x) > 0.5 || std::abs(p.y) > 0.5) {
-      std::cout << "Particle out of bounds: " << p << std::endl;
+  forEachParticle([this, particleRadiusPx](
+                      Particle particle,
+                      Vec2 position,
+                      Vec2 cellPosition) {
+    if (std::abs(particle.x) > 0.5 || std::abs(particle.y) > 0.5) {
+      std::cout << "Particle out of bounds: " << particle << std::endl;
     }
-    if (p.freezeStep < 0 && !hasActiveParticles) {
+    if (particle.freezeStep < 0 && !hasActiveParticles) {
       return;
     }
     sf::CircleShape circle(particleRadiusPx);
+    circle.setPosition(position.x, position.y);
     circle.setOrigin(particleRadiusPx, particleRadiusPx);
-    circle.setPosition(v.x, v.y);
-    bool isFrozen = p.freezeStep > 0;
-
+    bool isFrozen = particle.freezeStep > 0;
     sf::Color color;
     if (isFrozen) {
       if (particleColor == "gradient") {
         color = sf::Color(
-            ((double)p.freezeStep / (double)field.stepNumber) * 255,
+            ((double)particle.freezeStep / (double)field.stepNumber) * 255,
             0,
-            255 - (((double)p.freezeStep / (double)field.stepNumber) * 255));
+            255 - (((double)particle.freezeStep / (double)field.stepNumber) * 255));
       } else if (particleColor == "contrast") {
         color = getContrastColor();
       } else if (particleColor == "cluster") {
@@ -64,7 +122,7 @@ void App::render() {
             std::distance(field.clusterSteps.begin(),
                           std::find(field.clusterSteps.begin(),
                                     field.clusterSteps.end(),
-                                    p.clusterStep));
+                                    particle.clusterStep));
         color = getClusterColor(clusterIndex);
       }
     } else {
@@ -74,22 +132,46 @@ void App::render() {
     window.draw(circle);
   });
 
-  forEachParticle([this, cellSizePx, particleRadiusPx](Particle p, Vec2 v) {
-    if (hasLabels && p.freezeStep > 0 && p.bornStep == p.clusterStep) {
-      sf::Color color = getContrastColor();
-      sf::Vertex line[] = {sf::Vertex(sf::Vector2f(v.x, v.y), color),
-                           sf::Vertex(sf::Vector2f(v.x + 20, v.y + 20), color)};
-      window.draw(line, 2, sf::Lines);
+  forEachParticle([this, cellSizePx, particleRadiusPx](
+                      Particle particle,
+                      Vec2 position,
+                      Vec2 cellPosition) {
+    if (hasLabels && particle.freezeStep > 0 && particle.bornStep == particle.clusterStep) {
+      drawPopup(
+          window,
+          sf::Vector2f(position.x, position.y),
+          "Cluster #" + std::to_string(particle.clusterStep),
+          font,
+          getContrastColor(),
+          getBackgroundColor());
+    }
+  });
 
-      sf::Text text;
-      text.setFont(font);
-      text.setString("Cluster #" + std::to_string(p.clusterStep));
-      text.setCharacterSize(14);
-      text.setFillColor(color);
-      text.setPosition(v.x + 25, v.y + 25);
-      window.draw(text);
+  forEachParticle([this, cellSizePx, particleRadiusPx, mousePosition](
+                      Particle particle,
+                      Vec2 position,
+                      Vec2 cellPosition) {
+    Vec2 mouseDelta = position - Vec2(mousePosition.x, mousePosition.y);
+    if (hasLabels && mouseDelta.length() < particleRadiusPx) {
+      drawPopup(
+          window,
+          sf::Vector2f(position.x, position.y),
+          "Particle = {" +
+              std::to_string(particle.bornStep) + ", " +
+              std::to_string(particle.freezeStep) + ", " +
+              std::to_string(particle.clusterStep) +
+              "},\nPosition = {" +
+              std::to_string(position.x) + ", " +
+              std::to_string(position.y) +
+              "},\nCell = {" +
+              std::to_string(cellPosition.x) + ", " +
+              std::to_string(cellPosition.y) +
+              "}",
+          font,
+          getContrastColor(),
+          getBackgroundColor());
     }
   });
 }
 
-}; // namespace dendrite
+} // namespace dendrite

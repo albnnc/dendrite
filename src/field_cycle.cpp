@@ -13,6 +13,10 @@ void Field::cycle() {
   }
   move();
   if (canLog) {
+    std::cout << "Sorting" << std::endl;
+  }
+  sort();
+  if (canLog) {
     std::cout << "Joining" << std::endl;
   }
   join();

@@ -54,6 +54,7 @@ private:
   std::string getExecutableDir();
   std::string getCwd();
   sf::Color getContrastColor();
+  sf::Color getBackgroundColor();
   sf::Color getClusterColor(int clusterIndex);
 };
 

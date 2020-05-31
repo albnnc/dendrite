@@ -44,7 +44,7 @@ void Field::collapse() {
         (*notFrozenFirst) =
             Particle(median.x, median.y, stepNumber, stepNumber, stepNumber);
 
-        // TODO: one step may produce multiple clusters
+        // TODO: на одном шаге может появиться несколько кластеров
         clusterSteps.push_back(stepNumber);
       }
     }

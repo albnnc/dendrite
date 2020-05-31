@@ -41,7 +41,8 @@ void Field::arrange() {
           } else {
             std::cout << "Unable to move particle to cell "
                       << Vec2(x, y)
-                      << ", removing it";
+                      << ", removing it"
+                      << std::endl;
           }
         }
       }

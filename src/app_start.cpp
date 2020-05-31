@@ -36,7 +36,7 @@ void App::start() {
       }
     }
 
-    window.clear(backgroundColor == "dark" ? sf::Color::Black : sf::Color::White);
+    window.clear(getBackgroundColor());
     render();
     window.display();
 
