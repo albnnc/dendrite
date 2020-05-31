@@ -10,7 +10,7 @@ void App::start() {
       for (int i = 0; i < stepsPerFrame; ++i) {
         auto begin = std::chrono::system_clock::now();
         field.cycle();
-        if (mayLogDebug) {
+        if (logLevel >= 3) {
           auto end = std::chrono::system_clock::now();
           std::chrono::duration<double> diff = end - begin;
           double seconds = diff.count();
@@ -28,7 +28,7 @@ void App::start() {
           (dimensionDataFilesUpdateStep == -1 ||
            field.stepNumber - dimensionDataFilesUpdateStep >=
                stepsPerDimensionDataFileEntry)) {
-        if (mayLogDebug) {
+        if (logLevel >= 3) {
           std::cout << "Update dimension data files" << std::endl;
         }
         dimensionDataFilesUpdateStep = field.stepNumber;

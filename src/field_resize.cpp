@@ -65,6 +65,10 @@ void Field::resize() {
       }
     }
   }
+
+  if (logLevel >= 2) {
+    std::cout << "Resized to " << size << "x" << size << std::endl;
+  }
 }
 
 }; // namespace dendrite

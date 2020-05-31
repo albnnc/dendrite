@@ -23,6 +23,7 @@ public:
   long long int stepNumber = 1;
 
   // config.ini group
+  int logLevel;
   int fieldSize;
   std::string fieldType;
   int sideResizeDelta;
@@ -36,7 +37,6 @@ public:
   double particleDeltaShift;
   double interactionDelta;
   double interactionDeltaForFreeze;
-  bool mayLogDebug;
 
   Field(Config &config);
 

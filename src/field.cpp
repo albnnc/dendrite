@@ -3,7 +3,8 @@
 namespace dendrite {
 
 Field::Field(Config &config)
-    : fieldSize(config.get<int>("field", "fieldSize")),
+    : logLevel(config.get<int>("field", "logLevel")),
+      fieldSize(config.get<int>("field", "fieldSize")),
       fieldType(config.get<std::string>("field", "fieldType")),
       sideResizeDelta(config.get<int>("field", "sideResizeDelta")),
       populationMax(config.get<int>("field", "populationMax")),
@@ -15,8 +16,7 @@ Field::Field(Config &config)
       particleDeltaMax(config.get<double>("field", "particleDeltaMax")),
       particleDeltaShift(config.get<double>("field", "particleDeltaShift")),
       interactionDelta(config.get<double>("field", "interactionDelta")),
-      interactionDeltaForFreeze(config.get<double>("field", "interactionDeltaForFreeze")),
-      mayLogDebug(config.get<bool>("field", "mayLogDebug")) {
+      interactionDeltaForFreeze(config.get<double>("field", "interactionDeltaForFreeze")) {
   resize();
   cycle();
 }

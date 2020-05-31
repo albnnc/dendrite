@@ -24,6 +24,7 @@ public:
 
 private:
   // config.ini group
+  int logLevel;
   int windowSizePx;
   double particleRadiusDeltaPx;
   int sleepMs;
@@ -34,7 +35,6 @@ private:
   bool hasGrid;
   bool mayIterate;
   bool mayUpdateDimensionDataFiles;
-  bool mayLogDebug;
   std::string backgroundColor;
   std::string particleColor;
 

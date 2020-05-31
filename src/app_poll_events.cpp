@@ -10,7 +10,7 @@ void App::pollEvents() {
     }
 
     if (event.type == sf::Event::KeyReleased) {
-      if (mayLogDebug) {
+      if (logLevel >= 2) {
         std::cout << "Key pressed: " << event.key.code << std::endl;
       }
 
