@@ -18,11 +18,11 @@ void Config::parse(int argc, char *argv[]) {
     }
 
     if (parsed.count("config")) {
-      std::string cwd = std::filesystem::current_path();
+      std::string cwd = std::filesystem::current_path().u8string();
       std::string path = parsed["config"].as<std::string>();
       configPath = (std::filesystem::path(cwd) / path).string();
     } else {
-      configPath = std::filesystem::path(getExecutableDir()) / "config.ini";
+      configPath = (std::filesystem::path(getExecutableDir()) / "config.ini").u8string();
     }
 
     std::cout << "Looking for config at \""

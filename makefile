@@ -15,7 +15,7 @@ DEP := $(OBJ:.o=.d)
 all: $(EXE)
 
 $(EXE): $(OBJ)
-	$(CC) $(LFLAGS) $(LIB) -o $@ $^
+	$(CC) $(LFLAGS) -o $@ $^ $(LIB)
   
 $(BUILD_DIR)/%.o: $(SRC_DIR)/%.cpp $(BUILD_DIR)/%.d
 	mkdir -p $(BUILD_DIR)
