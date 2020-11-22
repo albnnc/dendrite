@@ -3,6 +3,7 @@ import cv2
 import numpy as np
 import matplotlib.pyplot as plt
 from matplotlib import rc
+from matplotlib.colors import LogNorm
 
 rc('text', usetex=True)
 
@@ -18,7 +19,7 @@ if image is None:
 
 fft = np.fft.fft2(image)
 fft = np.fft.fftshift(fft)
-fft = 100 * (np.log(np.abs(fft)))
+fft = np.abs(fft)
 
 plt.tick_params(
     axis='both',
@@ -30,8 +31,13 @@ plt.tick_params(
     labelbottom=False,
     labelleft=False)
 
-plt.xlabel('$f_x$', fontsize=38, labelpad=17)
-plt.ylabel('$f_y$', fontsize=38)
+plt.xlabel('$f_x$', fontsize=20)
+plt.ylabel('$f_y$', fontsize=20)
 
-plt.imshow(fft, cmap='gray', origin='lower')
+fft_min = np.min(fft)
+fft_max = np.max(fft)
+
+plt.imshow(fft, cmap='gray', origin='lower',
+           norm=LogNorm(vmin=fft_min, vmax=fft_max))
+plt.colorbar()
 plt.show()
