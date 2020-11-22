@@ -31,8 +31,8 @@ plt.tick_params(
     labelbottom=False,
     labelleft=False)
 
-plt.xlabel('$f_x$', fontsize=20)
-plt.ylabel('$f_y$', fontsize=20)
+plt.xlabel('$f_x$', fontsize=24)
+plt.ylabel('$f_y$', fontsize=24)
 
 fft_min = np.min(fft)
 fft_max = np.max(fft)
