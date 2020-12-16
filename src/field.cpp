@@ -13,8 +13,10 @@ Field::Field(Config &config)
       particleBirthProbability(config.get<double>("field", "particleBirthProbability")),
       particleBirthTriesMax(config.get<int>("field", "particleBirthTriesMax")),
       particleRadius(config.get<double>("field", "particleRadius")),
-      particleDeltaMax(config.get<double>("field", "particleDeltaMax")),
-      particleDeltaShift(config.get<double>("field", "particleDeltaShift")),
+      particleMoveDelta(config.get<double>("field", "particleMoveDelta")),
+      particleMoveDeltaShift(config.get<double>("field", "particleMoveDeltaShift")),
+      particleJoinDeltaCoeff(config.get<double>("field", "particleJoinDeltaCoeff")),
+      particleJoinDeltaMax(config.get<double>("field", "particleJoinDeltaMax")),
       interactionDelta(config.get<double>("field", "interactionDelta")),
       interactionDeltaForFreeze(config.get<double>("field", "interactionDeltaForFreeze")) {
   resize();

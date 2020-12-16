@@ -46,21 +46,23 @@ void Field::join() {
               }
               if (closestFrozenDistance == -1) {
                 if (dLength < 2 * particleRadius) {
-                  translation -= d.normalize() * particleRadius;
+                  translation -= d.normalize() * (2 * particleRadius - dLength) / 2;
                 } else if (dLength <= interactionDelta) {
-                  Vec2 translationCandidate = d / 2 / dLength / dLength;
+                  Vec2 translationCandidate = d / 2 / dLength / dLength * particleJoinDeltaCoeff;
                   Vec2 translationMax = d - d.normalize() * 2 * particleRadius;
-                  if (translationMax.length() < translationCandidate.length()) {
+                  if (translationCandidate.length() > translationMax.length()) {
                     translation += translationMax;
                   } else {
-                    translation += translationMax;
+                    translation += translationCandidate;
                   }
                 }
               }
             }
           }
           if (closestFrozenDistance == -1) {
-            p += translation.normalize() * particleDeltaMax;
+            // std::cout << "DBG " << translation << std::endl;
+            p += translation;
+            // p += translation.normalize() * particleJoinDeltaMax;
           } else {
             p.set(closestFrozenNeighborPosition.x,
                   closestFrozenNeighborPosition.y);

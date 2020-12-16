@@ -33,8 +33,10 @@ public:
   double particleBirthProbability;
   int particleBirthTriesMax;
   double particleRadius;
-  double particleDeltaMax;
-  double particleDeltaShift;
+  double particleMoveDelta;
+  double particleMoveDeltaShift;
+  double particleJoinDeltaCoeff;
+  double particleJoinDeltaMax;
   double interactionDelta;
   double interactionDeltaForFreeze;
 
