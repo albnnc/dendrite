@@ -5,13 +5,17 @@ namespace dendrite {
 void Field::cycle() {
   bool canLog = logLevel >= 4;
   if (canLog) {
-    std::cout << "Borning" << std::endl;
+    std::cout << "Giving birth" << std::endl;
   }
   born();
   if (canLog) {
     std::cout << "Moving" << std::endl;
   }
   move();
+  if (canLog) {
+    std::cout << "Arranging" << std::endl;
+  }
+  arrange();
   if (canLog) {
     std::cout << "Sorting" << std::endl;
   }

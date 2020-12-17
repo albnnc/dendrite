@@ -19,6 +19,7 @@ public:
 
   void start();
   void render();
+  void iterate();
   void pollEvents();
   void screenshot();
 
@@ -39,6 +40,7 @@ private:
   std::string particleColor;
 
   bool hasActiveParticles = true;
+  bool hasSingleStepPerFrame = false;
 
   sf::RenderWindow window;
   Field field;

@@ -7,8 +7,8 @@
 namespace dendrite {
 
 void Field::collapse() {
-#pragma omp parallel for reduction(merge \
-                                   : clusterSteps)
+  // #pragma omp parallel for reduction(merge
+  //                                    : clusterSteps)
   for (int i = 0; i < fieldSize; ++i) {
     for (int j = 0; j < fieldSize; ++j) {
       auto &cell = data[i][j];

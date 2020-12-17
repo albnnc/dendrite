@@ -6,7 +6,7 @@ void Field::move() {
   hasAnyMoved = false;
   hasSideParticles = false;
 
-#pragma omp parallel for
+  // #pragma omp parallel for
   for (int i = 0; i < fieldSize; ++i) {
     for (int j = 0; j < fieldSize; ++j) {
       for (int k = 0; k < populationMax; ++k) {

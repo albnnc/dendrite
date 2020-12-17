@@ -20,6 +20,20 @@ void App::pollEvents() {
         mayIterate = !mayIterate;
       }
 
+      if (event.key.code == 42) // Right Shift
+      {
+        std::cout << (hasSingleStepPerFrame
+                          ? "Switch to multiple steps per frame"
+                          : "Switch to single step per frame")
+                  << std::endl;
+        hasSingleStepPerFrame = !hasSingleStepPerFrame;
+      }
+
+      if (!mayIterate && event.key.code == 58) // Enter
+      {
+        iterate();
+      }
+
       if (event.key.control && event.key.code == 18) // Ctrl + S
       {
         prepareOutDir();
