@@ -48,7 +48,7 @@ double Field::computeDiameter(long long int clusterStep) {
 
   for (int k = 0; k < populationMax; ++k) {
     auto p = data[minField.x][minField.y][k];
-    if (p.bornStep < 0) {
+    if (p.birthStep < 0) {
       break;
     }
     if (clusterStep > 0 && clusterStep != p.clusterStep) {
@@ -57,7 +57,7 @@ double Field::computeDiameter(long long int clusterStep) {
 
     for (int z = 0; z < populationMax; ++z) {
       auto q = data[maxField.x][maxField.y][z];
-      if (q.bornStep < 0) {
+      if (q.birthStep < 0) {
         break;
       }
       if (clusterStep > 0 && clusterStep != q.clusterStep) {

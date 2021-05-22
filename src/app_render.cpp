@@ -83,7 +83,7 @@ void App::render() {
       for (int j = 0; j < fieldSize; ++j) {
         for (int k = 0; k < field.populationMax; ++k) {
           Particle p = field.data[i][j][k];
-          if (p.bornStep < 0) {
+          if (p.birthStep < 0) {
             break;
           }
           Vec2 cellPosition(i, j);
@@ -136,7 +136,7 @@ void App::render() {
                       Particle particle,
                       Vec2 position,
                       Vec2 cellPosition) {
-    if (hasLabels && particle.freezeStep > 0 && particle.bornStep == particle.clusterStep) {
+    if (hasLabels && particle.freezeStep > 0 && particle.birthStep == particle.clusterStep) {
       drawPopup(
           window,
           sf::Vector2f(position.x, position.y),
@@ -157,7 +157,7 @@ void App::render() {
           window,
           sf::Vector2f(position.x, position.y),
           "Particle = {" +
-              std::to_string(particle.bornStep) + ", " +
+              std::to_string(particle.birthStep) + ", " +
               std::to_string(particle.freezeStep) + ", " +
               std::to_string(particle.clusterStep) +
               "},\nPosition = {" +

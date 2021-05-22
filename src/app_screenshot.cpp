@@ -8,7 +8,7 @@ void App::screenshot() {
   for (int i = 0; i < field.fieldSize; ++i) {
     for (int j = 0; j < field.fieldSize; ++j) {
       for (int k = 0; k < field.populationMax; ++k) {
-        if (field.data[i][j][k].bornStep < 0) {
+        if (field.data[i][j][k].birthStep < 0) {
           break;
         }
         if (field.data[i][j][k].freezeStep > 0) {

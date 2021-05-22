@@ -13,7 +13,7 @@ void Field::sort() {
             if (a.freezeStep > 0 && b.freezeStep < 0) {
               return true;
             }
-            if (a.bornStep > 0 && b.bornStep < 0) {
+            if (a.birthStep > 0 && b.birthStep < 0) {
               return true;
             }
             return false;

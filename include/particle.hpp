@@ -6,19 +6,19 @@ namespace dendrite {
 
 class Particle : public Vec2 {
 public:
-  long long int bornStep = -1;
+  long long int birthStep = -1;
   long long int freezeStep = -1;
   long long int clusterStep = -1;
 
   Particle(
       double x = -1,
       double y = -1,
-      long long int bornStep = -1,
+      long long int birthStep = -1,
       long long int freezeStep = -1,
       long long int clusterStep = -1) {
     this->x = x;
     this->y = y;
-    this->bornStep = bornStep;
+    this->birthStep = birthStep;
     this->freezeStep = freezeStep;
     this->clusterStep = clusterStep;
   }
@@ -26,7 +26,7 @@ public:
   Particle &operator=(const Particle &p) {
     x = p.x;
     y = p.y;
-    bornStep = p.bornStep;
+    birthStep = p.birthStep;
     freezeStep = p.freezeStep;
     clusterStep = p.clusterStep;
     return *this;
@@ -38,7 +38,7 @@ public:
        << ", "
        << p.y
        << ", "
-       << p.bornStep
+       << p.birthStep
        << ", "
        << p.freezeStep
        << "}";

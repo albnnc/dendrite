@@ -7,7 +7,7 @@ void Field::cycle() {
   if (canLog) {
     std::cout << "Giving birth" << std::endl;
   }
-  born();
+  giveBirth();
   if (canLog) {
     std::cout << "Moving" << std::endl;
   }

@@ -69,7 +69,7 @@ double Field::countBoxes(long long int clusterStep) {
 
         auto &cell = data[xField][yField];
         for (int k = 0; k < populationMax; ++k) {
-          if (cell[k].bornStep < 0) {
+          if (cell[k].birthStep < 0) {
             break;
           }
           if ((cell[k].freezeStep < 0) ||

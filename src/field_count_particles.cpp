@@ -9,7 +9,7 @@ long long int Field::countParticles(long long int clusterStep) {
     for (int j = 0; j < fieldSize; ++j) {
       for (int k = 0; k < populationMax; ++k) {
         Particle &p = data[i][j][k];
-        if (p.bornStep < 0) {
+        if (p.birthStep < 0) {
           break;
         }
         if ((clusterStep == -1 && p.freezeStep > 0) ||

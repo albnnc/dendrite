@@ -7,7 +7,7 @@ void Field::resize() {
   if (size < 1) {
     // constructor call
     size = fieldSize;
-  } else if (fieldType == "shelling" && !mayBorn && !hasAnyMoved) {
+  } else if (fieldType == "shelling" && !mayGiveBirth && !hasAnyMoved) {
     // shelling upscale
     size += sideResizeDelta;
   } else {

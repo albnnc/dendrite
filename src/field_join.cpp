@@ -8,7 +8,7 @@ void Field::join() {
     for (int j = 0; j < fieldSize; ++j) {
       for (int k = 0; k < populationMax; ++k) {
         Particle &p = data[i][j][k];
-        if (p.bornStep < 0) {
+        if (p.birthStep < 0) {
           break;
         }
         if (p.freezeStep > 0) {
@@ -31,7 +31,7 @@ void Field::join() {
                 continue;
               }
               Particle &q = data[x][y][z];
-              if (q.bornStep < 0) {
+              if (q.birthStep < 0) {
                 break;
               }
               Vec2 d = Vec2(x - i, y - j) + q - p;

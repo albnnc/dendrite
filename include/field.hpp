@@ -42,7 +42,7 @@ public:
   Field(Config &config);
 
   void resize();
-  void born();
+  void giveBirth();
   void die();
   void move();
   void sort();
@@ -58,7 +58,7 @@ public:
 private:
   bool hasAnyMoved = false;
   bool hasSideParticles = false;
-  bool mayBorn = false;
+  bool mayGiveBirth = false;
   Vec2 fieldCenter;
   std::vector<std::reference_wrapper<Cell>> birthCells;
   Random random;

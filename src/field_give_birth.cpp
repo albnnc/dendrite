@@ -2,9 +2,9 @@
 
 namespace dendrite {
 
-void Field::born() {
-  mayBorn = false;
-  auto bornInCell = [this](Cell &cell) {
+void Field::giveBirth() {
+  mayGiveBirth = false;
+  auto giveBirthInCell = [this](Cell &cell) {
     auto frozen = std::find_if(
         cell.begin(),
         cell.end(),
@@ -14,27 +14,27 @@ void Field::born() {
     if (frozen != cell.end()) {
       return;
     }
-    mayBorn = true;
+    mayGiveBirth = true;
     int birthTries = 0;
     auto it = std::find_if(
         cell.begin(),
         cell.end(),
         [](const Particle &p) {
-          return p.bornStep < 0;
+          return p.birthStep < 0;
         });
 
     while (it != cell.end() && birthTries < particleBirthTriesMax) {
       if (random.getDouble() < particleBirthProbability) {
         it->x = random.getDouble() - 0.5;
         it->y = random.getDouble() - 0.5;
-        it->bornStep = stepNumber;
+        it->birthStep = stepNumber;
         ++it;
       }
       ++birthTries;
     }
   };
 
-  if (fieldType == "bouillon" && stepNumber != 1) {
+  if (fieldType == "bornuillon" && stepNumber != 1) {
     return;
   }
 
@@ -42,7 +42,7 @@ void Field::born() {
   for (auto it = birthCells.begin();
        it != birthCells.end();
        ++it) {
-    bornInCell(*it);
+    giveBirthInCell(*it);
   }
 }
 

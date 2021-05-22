@@ -17,7 +17,7 @@ void Field::collapse() {
               cell.begin(),
               cell.end(),
               [](Particle &p) {
-                return p.bornStep > 0 && p.freezeStep < 0;
+                return p.birthStep > 0 && p.freezeStep < 0;
               });
 
       if (notFrozenFirst == cell.end()) {
@@ -27,7 +27,7 @@ void Field::collapse() {
       auto notBornFirst = std::find_if(
           cell.begin(),
           cell.end(),
-          [](Particle &p) { return p.bornStep < 0; });
+          [](Particle &p) { return p.birthStep < 0; });
       int count = std::distance(notFrozenFirst, notBornFirst);
 
       if (notBornFirst == cell.end()) {

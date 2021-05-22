@@ -12,7 +12,7 @@ void Field::arrange() {
           data[i][j].begin(),
           data[i][j].end(),
           [](const Particle &p) {
-            return p.bornStep < 0;
+            return p.birthStep < 0;
           });
       populations[i][j] = std::distance(data[i][j].begin(), it);
     }
@@ -22,7 +22,7 @@ void Field::arrange() {
     for (int j = 0; j < fieldSize; ++j) {
       for (int k = 0; k < populationMax; ++k) {
         Particle p = data[i][j][k];
-        if (p.bornStep < 0) {
+        if (p.birthStep < 0) {
           break;
         }
         Vec2 delta(std::round(p.x), std::round(p.y));
