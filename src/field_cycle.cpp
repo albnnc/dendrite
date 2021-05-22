@@ -5,6 +5,10 @@ namespace dendrite {
 void Field::cycle() {
   bool canLog = logLevel >= 4;
   if (canLog) {
+    std::cout << "Making environment" << std::endl;
+  }
+  makeEnv();
+  if (canLog) {
     std::cout << "Giving birth" << std::endl;
   }
   giveBirth();

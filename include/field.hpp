@@ -42,6 +42,7 @@ public:
   Field(Config &config);
 
   void resize();
+  void makeEnv();
   void giveBirth();
   void die();
   void move();
