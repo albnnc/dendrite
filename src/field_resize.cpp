@@ -41,27 +41,35 @@ void Field::resize() {
   fieldCenter = Vec2((double)fieldSize / 2, (double)fieldSize / 2);
 
   double peripheryRadius = (double)(fieldSize - 1) / 2;
-  shellingCells.clear();
+  birthCells.clear();
   for (int i = 0; i < fieldSize; ++i) {
     for (int j = 0; j < fieldSize; ++j) {
       Cell &cell = data[i][j];
-      Vec2 cellCenter = Vec2(i, j);
-      std::vector<Vec2> cellCorners = {
-          cellCenter + Vec2(0, 0),
-          cellCenter + Vec2(0, 1),
-          cellCenter + Vec2(1, 0),
-          cellCenter + Vec2(1, 1)};
-      bool hasInside = false;
-      bool hasOutside = false;
-      for (auto it = cellCorners.begin(); it != cellCorners.end(); ++it) {
-        if ((*it - fieldCenter).length() <= peripheryRadius) {
-          hasInside = true;
-        } else {
-          hasOutside = true;
+      if (fieldType == "bouillon" || fieldType == "immersion") {
+        birthCells.push_back(cell);
+      } else if (fieldType == "migration") {
+        if (j == 0) {
+          birthCells.push_back(cell);
         }
-      }
-      if (hasInside && hasOutside) {
-        shellingCells.push_back(cell);
+      } else if (fieldType == "shelling") {
+        Vec2 cellCenter = Vec2(i, j);
+        std::vector<Vec2> cellCorners = {
+            cellCenter + Vec2(0, 0),
+            cellCenter + Vec2(0, 1),
+            cellCenter + Vec2(1, 0),
+            cellCenter + Vec2(1, 1)};
+        bool hasInside = false;
+        bool hasOutside = false;
+        for (auto it = cellCorners.begin(); it != cellCorners.end(); ++it) {
+          if ((*it - fieldCenter).length() <= peripheryRadius) {
+            hasInside = true;
+          } else {
+            hasOutside = true;
+          }
+        }
+        if (hasInside && hasOutside) {
+          birthCells.push_back(cell);
+        }
       }
     }
   }

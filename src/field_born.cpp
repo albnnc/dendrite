@@ -34,22 +34,15 @@ void Field::born() {
     }
   };
 
-  if (fieldType == "bouillon" && stepNumber == 1) {
-#pragma omp parallel for
-    for (int i = 0; i < fieldSize; ++i) {
-      for (int j = 0; j < fieldSize; ++j) {
-        bornInCell(data[i][j]);
-      }
-    }
+  if (fieldType == "bouillon" && stepNumber != 1) {
+    return;
   }
 
-  if (fieldType == "shelling") {
 #pragma omp parallel for
-    for (auto it = shellingCells.begin();
-         it != shellingCells.end();
-         ++it) {
-      bornInCell(*it);
-    }
+  for (auto it = birthCells.begin();
+       it != birthCells.end();
+       ++it) {
+    bornInCell(*it);
   }
 }
 

@@ -16,7 +16,6 @@ Field::Field(Config &config)
       particleMoveDelta(config.get<double>("field", "particleMoveDelta")),
       particleMoveDeltaShift(config.get<double>("field", "particleMoveDeltaShift")),
       particleJoinDeltaCoeff(config.get<double>("field", "particleJoinDeltaCoeff")),
-      particleJoinDeltaMax(config.get<double>("field", "particleJoinDeltaMax")),
       interactionDelta(config.get<double>("field", "interactionDelta")),
       interactionDeltaForFreeze(config.get<double>("field", "interactionDeltaForFreeze")) {
   resize();

@@ -36,7 +36,6 @@ public:
   double particleMoveDelta;
   double particleMoveDeltaShift;
   double particleJoinDeltaCoeff;
-  double particleJoinDeltaMax;
   double interactionDelta;
   double interactionDeltaForFreeze;
 
@@ -61,7 +60,7 @@ private:
   bool hasSideParticles = false;
   bool mayBorn = false;
   Vec2 fieldCenter;
-  std::vector<std::reference_wrapper<Cell>> shellingCells;
+  std::vector<std::reference_wrapper<Cell>> birthCells;
   Random random;
 };
 

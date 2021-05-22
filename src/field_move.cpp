@@ -22,7 +22,11 @@ void Field::move() {
         }
         Vec2 delta((random.getDouble() > 0.5 ? 1 : -1) * random.getDouble(),
                    (random.getDouble() > 0.5 ? 1 : -1) * random.getDouble());
-        Vec2 shift = fieldCenter - Vec2(i + 0.5 + p.x, j + 0.5 + p.y);
+        Vec2 shift = fieldType == "shelling"
+                         ? fieldCenter - Vec2(i + 0.5 + p.x, j + 0.5 + p.y)
+                     : fieldType == "migration"
+                         ? Vec2(0, 1)
+                         : Vec2(0, 0);
         p += delta.normalize() * particleMoveDelta +
              shift.normalize() * particleMoveDeltaShift;
         hasAnyMoved = true;
