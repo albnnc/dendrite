@@ -22,6 +22,8 @@ public:
   void iterate();
   void pollEvents();
   void screenshot();
+  void dump();
+  void load();
 
 private:
   // config.ini group
@@ -39,12 +41,16 @@ private:
   std::string backgroundColor;
   std::string particleColor;
 
+  bool isHeadless;
+  bool hasToLoad;
+  std::string dumpToLoad;
+
   bool hasActiveParticles = true;
   bool hasSingleStepPerFrame = false;
 
-  sf::RenderWindow window;
   Field field;
-  sf::Font font;
+  sf::RenderWindow *window;
+  sf::Font *font;
 
   int dimensionDataFilesUpdateStep = -1;
   std::vector<DataFile> dimensionDataFiles;

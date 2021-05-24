@@ -5,6 +5,7 @@ namespace dendrite {
 Field::Field(Config &config)
     : logLevel(config.get<int>("field", "logLevel")),
       fieldSize(config.get<int>("field", "fieldSize")),
+      fieldSizeMax(config.get<int>("field", "fieldSizeMax")),
       fieldType(config.get<std::string>("field", "fieldType")),
       sideResizeDelta(config.get<int>("field", "sideResizeDelta")),
       populationMax(config.get<int>("field", "populationMax")),

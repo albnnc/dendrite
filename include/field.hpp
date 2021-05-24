@@ -21,10 +21,12 @@ public:
   std::vector<long long int> clusterSteps;
 
   long long int stepNumber = 1;
+  bool isFinished = false;
 
   // config.ini group
   int logLevel;
   int fieldSize;
+  int fieldSizeMax;
   std::string fieldType;
   int sideResizeDelta;
   int populationMax;
@@ -41,7 +43,7 @@ public:
 
   Field(Config &config);
 
-  void resize();
+  void resize(int forcedSize = -1);
   void makeEnv();
   void giveBirth();
   void die();

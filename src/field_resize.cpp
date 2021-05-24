@@ -2,11 +2,18 @@
 
 namespace dendrite {
 
-void Field::resize() {
+void Field::resize(int forcedSize) {
   int size = data.size();
   if (size < 1) {
     // constructor call
     size = fieldSize;
+  } else if (forcedSize > 0) {
+    size = forcedSize;
+  } else if (
+      (fieldType != "shelling" || fieldSize >= fieldSizeMax) &&
+      !mayGiveBirth && !hasAnyMoved) {
+    isFinished = true;
+    return;
   } else if (fieldType == "shelling" && !mayGiveBirth && !hasAnyMoved) {
     // shelling upscale
     size += sideResizeDelta;
@@ -15,10 +22,14 @@ void Field::resize() {
   }
 
   int oldSize = data.size();
-  for (int i = 0; i < oldSize; ++i) {
-    data[i].resize(
-        size,
-        std::vector<Particle>(populationMax, Particle()));
+  if (forcedSize > 0) {
+    data.clear();
+  } else {
+    for (int i = 0; i < oldSize; ++i) {
+      data[i].resize(
+          size,
+          std::vector<Particle>(populationMax, Particle()));
+    }
   }
   data.resize(
       size,
@@ -26,13 +37,15 @@ void Field::resize() {
           size,
           std::vector<Particle>(populationMax, Particle())));
 
-  int gap = (size - oldSize) / 2;
-  for (int i = size - 1; i >= 0; --i) {
-    for (int j = size - 1; j >= 0; --j) {
-      if (i < gap || j < gap) {
-        data[i][j] = std::vector<Particle>(populationMax, Particle());
-      } else if (i < size - gap && i < size - gap) {
-        data[i][j] = data[i - gap][j - gap];
+  if (!forcedSize) {
+    int gap = (size - oldSize) / 2;
+    for (int i = size - 1; i >= 0; --i) {
+      for (int j = size - 1; j >= 0; --j) {
+        if (i < gap || j < gap) {
+          data[i][j] = std::vector<Particle>(populationMax, Particle());
+        } else if (i < size - gap && i < size - gap) {
+          data[i][j] = data[i - gap][j - gap];
+        }
       }
     }
   }

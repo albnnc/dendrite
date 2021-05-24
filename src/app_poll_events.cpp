@@ -4,9 +4,9 @@ namespace dendrite {
 
 void App::pollEvents() {
   sf::Event event;
-  while (window.pollEvent(event)) {
+  while (window->pollEvent(event)) {
     if (event.type == sf::Event::Closed) {
-      window.close();
+      window->close();
     }
 
     if (event.type == sf::Event::KeyReleased) {
@@ -48,6 +48,13 @@ void App::pollEvents() {
           df.write(outDir + "/" + df.title + ".dat");
         }
         std::cout << "Dimensions data files saved" << std::endl;
+      }
+
+      if (event.key.control && event.key.code == 5) // Ctrl + F
+      {
+        prepareOutDir();
+        dump();
+        std::cout << "Dump saved" << std::endl;
       }
 
       if (event.key.code == 0) // A

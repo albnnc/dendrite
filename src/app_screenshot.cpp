@@ -28,8 +28,8 @@ void App::screenshot() {
           particleColor +
           ".png";
   sf::Texture texture;
-  texture.create(window.getSize().x, window.getSize().y);
-  texture.update(window);
+  texture.create(window->getSize().x, window->getSize().y);
+  texture.update(*window);
   if (texture.copyToImage().saveToFile(path)) {
     // success
   }

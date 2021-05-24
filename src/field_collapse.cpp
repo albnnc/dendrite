@@ -31,7 +31,10 @@ void Field::collapse() {
       int count = std::distance(notFrozenFirst, notBornFirst);
 
       if (notBornFirst == cell.end()) {
-        std::cout << "Cell overlow occured" << std::endl;
+        if (logLevel >= 1) {
+          std::cout << "Cell overlow occured" << std::endl;
+        }
+        continue;
       }
 
       if (count >= populationCritical || notBornFirst == cell.end()) {
@@ -44,7 +47,13 @@ void Field::collapse() {
         (*notFrozenFirst) =
             Particle(median.x, median.y, stepNumber, stepNumber, stepNumber);
 
-        // TODO: на одном шаге может появиться несколько кластеров
+        if (stepNumber > 0 &&
+            std::find(
+                clusterSteps.begin(),
+                clusterSteps.end(),
+                stepNumber) != clusterSteps.end()) {
+          clusterSteps.push_back(stepNumber);
+        }
         clusterSteps.push_back(stepNumber);
       }
     }

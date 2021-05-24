@@ -19,11 +19,17 @@ App::App(Config &config)
           config.get<bool>("app", "mayUpdateDimensionDataFiles")),
       backgroundColor(config.get<std::string>("app", "backgroundColor")),
       particleColor(config.get<std::string>("app", "particleColor")),
-      window(sf::VideoMode(windowSizePx, windowSizePx), "dendrite"),
+      isHeadless(config.get<bool>("app", "isHeadless")),
+      hasToLoad(config.get<bool>("app", "hasToLoad")),
+      dumpToLoad(config.get<std::string>("app", "dumpToLoad")),
       field(config) {
-  if (!font.loadFromFile("roboto.ttf")) {
-    std::cout << "Unable to load font";
-    exit(1);
+  if (!isHeadless) {
+    window = new sf::RenderWindow(sf::VideoMode(windowSizePx, windowSizePx), "dendrite");
+    font = new sf::Font();
+    if (!font->loadFromFile("roboto.ttf")) {
+      std::cout << "Unable to load font";
+      exit(1);
+    }
   }
 }
 

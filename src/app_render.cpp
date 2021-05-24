@@ -58,7 +58,7 @@ void App::render() {
   int cellSizePx = (windowSizePx / fieldSize);
   double particleRadiusPx =
       std::max(cellSizePx * field.particleRadius + particleRadiusDeltaPx, 0.5);
-  sf::Vector2i mousePosition = sf::Mouse::getPosition() - window.getPosition();
+  sf::Vector2i mousePosition = sf::Mouse::getPosition() - window->getPosition();
 
   if (hasGrid) {
     for (int i = 0; i < fieldSize; ++i) {
@@ -69,8 +69,8 @@ void App::render() {
       sf::Vertex line2[] = {
           sf::Vertex(sf::Vector2f(0, (i + 1) * cellSizePx), color),
           sf::Vertex(sf::Vector2f(windowSizePx, (i + 1) * cellSizePx), color)};
-      window.draw(line1, 2, sf::Lines);
-      window.draw(line2, 2, sf::Lines);
+      window->draw(line1, 2, sf::Lines);
+      window->draw(line2, 2, sf::Lines);
     }
   }
 
@@ -99,7 +99,9 @@ void App::render() {
                       Vec2 position,
                       Vec2 cellPosition) {
     if (std::abs(particle.x) > 0.5 || std::abs(particle.y) > 0.5) {
-      std::cout << "Particle out of bounds: " << particle << std::endl;
+      if (logLevel >= 1) {
+        std::cout << "Particle out of bounds: " << particle << std::endl;
+      }
     }
     if (particle.freezeStep < 0 && !hasActiveParticles) {
       return;
@@ -129,7 +131,7 @@ void App::render() {
       color = sf::Color(130, 130, 130);
     }
     circle.setFillColor(color);
-    window.draw(circle);
+    window->draw(circle);
   });
 
   forEachParticle([this, cellSizePx, particleRadiusPx](
@@ -138,10 +140,10 @@ void App::render() {
                       Vec2 cellPosition) {
     if (hasLabels && particle.freezeStep > 0 && particle.birthStep == particle.clusterStep) {
       drawPopup(
-          window,
+          *window,
           sf::Vector2f(position.x, position.y),
           "Cluster #" + std::to_string(particle.clusterStep),
-          font,
+          *font,
           getContrastColor(),
           getBackgroundColor());
     }
@@ -154,7 +156,7 @@ void App::render() {
     Vec2 mouseDelta = position - Vec2(mousePosition.x, mousePosition.y);
     if (hasLabels && mouseDelta.length() < particleRadiusPx) {
       drawPopup(
-          window,
+          *window,
           sf::Vector2f(position.x, position.y),
           "Particle = {" +
               std::to_string(particle.birthStep) + ", " +
@@ -167,7 +169,7 @@ void App::render() {
               std::to_string(cellPosition.x) + ", " +
               std::to_string(cellPosition.y) +
               "}",
-          font,
+          *font,
           getContrastColor(),
           getBackgroundColor());
     }

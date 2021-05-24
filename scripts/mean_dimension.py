@@ -12,19 +12,19 @@ if len(sys.argv) < 2:
 paths = glob.glob(sys.argv[1])
 dimensions = []
 for path in paths:
-  data = np.loadtxt(path)
-  if len(data) < 3:
+  file = open(path, 'r')
+  lines = file.readlines()
+  data = [v.strip().split() for v in lines if len(v.strip()) > 0]
+  if len(data) < 1:
     continue
-  last = data[-1][-1]
+  last = float(data[-1][-1])
   dimensions.append(last)
 
-mean = np.round(np.mean(dimensions), 3)
-std = np.round(np.std(dimensions), 3)
-print(str(mean) + ' +/- ' + str(std))
-
 mu, std = norm.fit(dimensions)
-x = np.linspace(1, 2, 200)
-p = norm.pdf(x, mu, std)
+print(str(mu) + ' +/- ' + str(std))
+
+x = np.linspace(1, 2, 500)
+p = norm.pdf(x, mu, std + 0.05)
 
 plt.plot(x, p)
 plt.show()
